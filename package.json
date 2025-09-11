@@ -1,7 +1,7 @@
 {
 	"name": "mizuki",
 	"type": "module",
-	"version": "4.8",
+	"version": "4.9",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -13,7 +13,9 @@
 		"new-post": "node scripts/new-post.js",
 		"format": "biome format --write ./src",
 		"lint": "biome check --write ./src",
-		"preinstall": "npx only-allow pnpm"
+		"preinstall": "npx only-allow pnpm",
+		"deploy": "gh-pages -d dist",
+		"homepage": "https://paradoxmoranis.github.io/MizukiBlogOfMoranis/"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
@@ -74,6 +76,7 @@
 		"@types/markdown-it": "^14.1.2",
 		"@types/mdast": "^4.0.4",
 		"@types/sanitize-html": "^2.16.0",
+		"gh-pages": "^6.3.0",
 		"postcss-import": "^16.1.1",
 		"postcss-nesting": "^13.0.2"
 	},
