@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://moranisparadox.github.io/</link><language>en</language><item><title>Arch-关于wayland下获取录屏流</title><link>https://moranisparadox.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://moranisparadox.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
+&lt;h2&gt;1.安装pipewire以及相关包&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S pipewire pipewire-pulse pipewire-alsa qt6-wayland
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;2.确保PipeWire服务正在运行&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;systemctl --user enable --now pipewire pipewire-pluse
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;3.安装xdg-desktop&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S xdg-desktop-portal-kde # 如果是hyprland就是xdg-desktop-portal-hyprland，以此类推
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;做完这些，OBS中就可以看到&lt;code&gt;屏幕捕捉(pipewire)&lt;/code&gt;&lt;/p&gt;
+</content:encoded></item><item><title>Arch-使用OBS的虚拟摄像头</title><link>https://moranisparadox.github.io/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</link><guid isPermaLink="true">https://moranisparadox.github.io/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</guid><description>本篇文章主要讲解如何使用OBS的虚拟摄像头。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;在Arch使用OBS的虚拟摄像头&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;检查 OBS Studio 版本&lt;/strong&gt;&lt;br /&gt;
+确保你的 OBS Studio 版本支持虚拟摄像头功能。虚拟摄像头支持从 OBS Studio 26.1 开始引入。运行以下命令检查版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Q obs-studio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果版本低于 26.1，建议更新到最新版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S obs-studio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装 v4l2loopback 模块&lt;/strong&gt;&lt;br /&gt;
+虚拟摄像头需要 &lt;code&gt;v4l2loopback&lt;/code&gt; 内核模块支持。安装 &lt;code&gt;v4l2loopback-dkms&lt;/code&gt; 和相关工具：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S v4l2loopback-dkms v4l2loopback-utils
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;确保你的系统已安装内核头文件（&lt;code&gt;linux-headers&lt;/code&gt; 或对应内核的头文件，例如 &lt;code&gt;linux-lts-headers&lt;/code&gt;）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S linux-headers
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;加载 v4l2loopback 模块&lt;/strong&gt;&lt;br /&gt;
+安装完成后，手动加载 &lt;code&gt;v4l2loopback&lt;/code&gt; 模块：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo modprobe v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你可以检查模块是否加载成功：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;lsmod | grep v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果需要自定义虚拟摄像头设备，可以指定参数，例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo modprobe v4l2loopback devices=1 video_nr=2 card_label=&quot;OBS Virtual Camera&quot; exclusive_caps=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这会创建一个名为 &quot;OBS Virtual Camera&quot; 的设备，位于 &lt;code&gt;/dev/video2&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;检查 OBS 设置&lt;/strong&gt;&lt;br /&gt;
+启动 OBS Studio，检查“控制”面板中是否出现“启动虚拟摄像头”按钮。如果没有，可能是以下原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;模块未加载&lt;/strong&gt;：确保 &lt;code&gt;v4l2loopback&lt;/code&gt; 模块已正确加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Flatpak 安装问题&lt;/strong&gt;：如果你通过 Flatpak 安装了 OBS Studio，虚拟摄像头可能不可用。建议使用 Arch 官方仓库的版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S obs-studio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Wayland 支持&lt;/strong&gt;：如果使用 Wayland 桌面环境，确保安装了 &lt;code&gt;qt6-wayland&lt;/code&gt;（OBS 28 及以上版本需要）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S qt6-wayland
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;验证虚拟摄像头&lt;/strong&gt;&lt;br /&gt;
+启动虚拟摄像头后，检查是否出现在设备列表中：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;v4l2-ctl --list-devices
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你应该能看到类似 &quot;OBS Virtual Camera&quot; 的设备。如果设备存在但无法在其他应用（如 Zoom、Skype）中使用，可能是权限问题。确保你的用户在 &lt;code&gt;video&lt;/code&gt; 组中：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo usermod -aG video $USER
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后重新登录或重启系统。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;解决常见问题&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;“启动虚拟摄像头失败”错误&lt;/strong&gt;：检查日志文件（在 OBS 的“帮助”菜单中选择“日志文件”）。常见问题可能是 &lt;code&gt;v4l2loopback&lt;/code&gt; 版本与内核不兼容。尝试降级到较旧的版本（例如 0.13.2）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -R v4l2loopback-dkms v4l2loopback-utils
+yay -S v4l2loopback-dkms=0.13.2-1 v4l2loopback-utils=0.13.2-1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;与其他设备冲突&lt;/strong&gt;：如果有其他设备（如 DroidCam）占用 &lt;code&gt;/dev/video0&lt;/code&gt;，可以卸载冲突模块：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo modprobe -r v4l2loopback
+sudo modprobe v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;重启 OBS 和系统&lt;/strong&gt;&lt;br /&gt;
+在安装模块或更改配置后，重启 OBS Studio 或整个系统以确保所有更改生效。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://moranisparadox.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://moranisparadox.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
+&lt;h2&gt;一、pacman 用法&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;pacman&lt;/code&gt;（Package Manager）是 Arch Linux 的核心包管理工具，用于安装、更新、删除和管理官方仓库中的软件包。它的命令通常需要以 &lt;code&gt;sudo&lt;/code&gt; 运行，因为包管理涉及系统级操作。&lt;/p&gt;
+&lt;h3&gt;1. 基本命令格式&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman [选项] [操作] [包名]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;2. 常用操作&lt;/h3&gt;
+&lt;h4&gt;(1) 同步和更新系统&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;更新软件包数据库和所有已安装的包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-S&lt;/code&gt;：同步软件包。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-y&lt;/code&gt;：刷新软件包数据库。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-u&lt;/code&gt;：升级所有已安装的包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;仅更新软件包数据库&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Sy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;强制刷新数据库&lt;/strong&gt;（当数据库损坏或需要强制更新时）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(2) 安装软件包&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装指定的软件包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;示例：安装 &lt;code&gt;vim&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S vim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装多个软件包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S 包名1 包名2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装本地包文件&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -U /路径/到/包文件.tar.zst
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(3) 删除软件包&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;删除软件包但保留其配置文件&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -R 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;删除软件包及其配置文件&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Rns 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-n&lt;/code&gt;：删除配置文件。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt;：递归删除不再需要的依赖。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;清理无用的依赖&lt;/strong&gt;（孤儿包）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Rns $(pacman -Qtdq)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-Qtdq&lt;/code&gt;：列出无依赖的孤儿包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(4) 查询软件包&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;搜索官方仓库中的软件包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Ss 关键字
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;示例：搜索包含 “firefox” 的包：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Ss firefox
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查询已安装的软件包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Qs 关键字
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;列出所有已安装的包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Q
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查看某个包的详细信息&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Si 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;（本地已安装的包用 &lt;code&gt;-Qi&lt;/code&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(5) 清理缓存&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;清理未使用的包缓存&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Sc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;清理所有缓存&lt;/strong&gt;（谨慎使用）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Scc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(6) 其他实用操作&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;列出显式安装的包&lt;/strong&gt;（非依赖安装的包）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Qe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;检查依赖问题&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Dk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;解决文件冲突&lt;/strong&gt;（强制覆盖）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S --overwrite &apos;*&apos; 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;3. 配置文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pacman&lt;/code&gt; 的配置文件位于 &lt;code&gt;/etc/pacman.conf&lt;/code&gt;，可以在这里调整仓库、镜像、并行下载等设置。例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;启用并行下载&lt;/strong&gt;：
+编辑 &lt;code&gt;/etc/pacman.conf&lt;/code&gt;，设置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ParallelDownloads = 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;添加第三方仓库&lt;/strong&gt;：
+在 &lt;code&gt;[core]&lt;/code&gt;、 &lt;code&gt;[extra]&lt;/code&gt; 等后添加自定义仓库。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. 注意事项&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;避免部分升级&lt;/strong&gt;：不要只运行 &lt;code&gt;pacman -Sy&lt;/code&gt; 而不升级系统（&lt;code&gt;-u&lt;/code&gt;），否则可能导致依赖不一致。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;检查镜像&lt;/strong&gt;：使用 &lt;code&gt;reflector&lt;/code&gt; 或手动编辑 &lt;code&gt;/etc/pacman.d/mirrorlist&lt;/code&gt; 选择快速的镜像。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;错误处理&lt;/strong&gt;：遇到数据库锁定时，删除 &lt;code&gt;/var/lib/pacman/db.lck&lt;/code&gt;（确保没有其他 pacman 进程运行）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h2&gt;二、paru 用法&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;paru&lt;/code&gt; 是一个 AUR 助手，扩展了 &lt;code&gt;pacman&lt;/code&gt; 的功能，允许用户方便地从 AUR 安装和管理社区维护的软件包。&lt;code&gt;paru&lt;/code&gt; 完全兼容 &lt;code&gt;pacman&lt;/code&gt; 的命令，同时增加了对 AUR 的支持。&lt;/p&gt;
+&lt;h3&gt;1. 安装 paru&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;paru&lt;/code&gt; 本身需要从 AUR 安装，步骤如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S base-devel git
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;2. 基本命令格式&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;paru&lt;/code&gt; 的命令与 &lt;code&gt;pacman&lt;/code&gt; 高度一致，基本可以直接替换：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru [选项] [操作] [包名]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;3. 常用操作&lt;/h3&gt;
+&lt;h4&gt;(1) 更新系统和 AUR 包&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;更新官方仓库和 AUR 包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Syu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这会同时检查官方仓库和 AUR 的更新。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;仅更新 AUR 包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Sua
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(2) 安装软件包&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;从官方仓库或 AUR 安装包&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -S 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;示例：安装 AUR 中的 &lt;code&gt;visual-studio-code-bin&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -S visual-studio-code-bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装时查看 PKGBUILD 文件&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -S 包名 --editmenu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这允许在安装前检查或编辑 AUR 包的构建脚本。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(3) 删除软件包&lt;/h4&gt;
+&lt;p&gt;与 &lt;code&gt;pacman&lt;/code&gt; 一致：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Rns 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;(4) 查询软件包&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;搜索官方仓库和 AUR&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Ss 关键字
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查看 AUR 包信息&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Si 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(5) 清理缓存&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;清理缓存&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Sc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;清理 AUR 构建目录&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Rns $(paru -Qdtq)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;(6) 特殊功能&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查看 PKGBUILD 文件&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Gp 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出指定 AUR 包的 PKGBUILD 文件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;跳过某些包的更新&lt;/strong&gt;：
+编辑 &lt;code&gt;/etc/paru.conf&lt;/code&gt;，添加：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Skip = 包名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;批量操作&lt;/strong&gt;：
+&lt;code&gt;paru&lt;/code&gt; 支持交互式界面。例如，安装多个包时会显示详细信息并允许选择。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. 配置文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;paru&lt;/code&gt; 的配置文件位于 &lt;code&gt;~/.config/paru/paru.conf&lt;/code&gt;，可以自定义行为，例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;启用颜色输出&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Color
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;自动清理构建依赖&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;RemoveMake
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;5. 注意事项&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;安全性&lt;/strong&gt;：AUR 包由社区维护，安装前应检查 PKGBUILD 文件，避免潜在的安全风险。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;依赖管理&lt;/strong&gt;：&lt;code&gt;paru&lt;/code&gt; 自动处理 AUR 包的依赖，但复杂依赖可能需要手动干预。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;性能&lt;/strong&gt;：&lt;code&gt;paru&lt;/code&gt; 比 &lt;code&gt;yay&lt;/code&gt;（另一个 AUR 助手）更轻量，适合资源有限的系统。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h2&gt;三、pacman 和 paru 的对比&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;特性&lt;/th&gt;
+&lt;th&gt;pacman&lt;/th&gt;
+&lt;th&gt;paru&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;支持的仓库&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;官方仓库（core/extra/community）&lt;/td&gt;
+&lt;td&gt;官方仓库 + AUR&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;命令兼容性&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;标准命令&lt;/td&gt;
+&lt;td&gt;兼容 pacman 命令，扩展 AUR 功能&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;AUR 支持&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;无&lt;/td&gt;
+&lt;td&gt;有，自动下载、构建、安装 AUR 包&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;性能&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;快速，官方工具&lt;/td&gt;
+&lt;td&gt;稍慢（因 AUR 构建），但优化良好&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;配置文件&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;/etc/pacman.conf&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;~/.config/paru/paru.conf&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;使用场景&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;系统更新、官方包管理&lt;/td&gt;
+&lt;td&gt;AUR 包安装、混合仓库管理&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h2&gt;四、实用技巧&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;快速更新系统&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru -Syu --noconfirm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;自动确认所有提示（谨慎使用）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查找包的所属软件&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Qo /路径/到/文件
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查看某个文件属于哪个包。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;优化镜像&lt;/strong&gt;：
+使用 &lt;code&gt;reflector&lt;/code&gt; 自动选择最快的镜像：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo reflector --country China --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;备份已安装的包列表&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Qe &amp;gt; pkglist.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;恢复时：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S - &amp;lt; pkglist.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;处理 AUR 构建失败&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;检查 &lt;code&gt;PKGBUILD&lt;/code&gt; 是否需要特定依赖。&lt;/li&gt;
+&lt;li&gt;确保 &lt;code&gt;base-devel&lt;/code&gt; Ascertain是否启用 &lt;code&gt;sudo&lt;/code&gt;（需要 &lt;code&gt;sudo&lt;/code&gt; 权限）。&lt;/li&gt;
+&lt;li&gt;更新系统并重新尝试。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;h2&gt;五、常见问题解决&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;“数据库锁”错误&lt;/strong&gt;：
+删除锁文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo rm /var/lib/pacman/db.lck
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;签名验证失败&lt;/strong&gt;：
+初始化或更新 GPG 密钥：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman-key --init
+sudo pacman-key --populate archlinux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;AUR 包构建失败&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确保安装了 &lt;code&gt;base-devel&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;检查网络连接（AUR 需要下载源码）。&lt;/li&gt;
+&lt;li&gt;查看错误日志，安装缺失的依赖。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item></channel></rss>

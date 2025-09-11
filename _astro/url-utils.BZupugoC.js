@@ -1,0 +1,1 @@
+import"./config.BmDNRQ8t.js";import"./zh_TW.D-i86LJH.js";function u(o,n){const r=o.replace(/^\/|\/$/g,"").toLowerCase(),t=n.replace(/^\/|\/$/g,"").toLowerCase();return r===t}function e(...o){return o.join("/").replace(/\/+/g,"/")}function l(o){return a(`/posts/${o}/`)}function a(o){return e("","/MizukiBlogOfMoranis/",o)}export{l as g,u as p,a as u};
