@@ -6,9 +6,9 @@ export interface Project {
 	title: string;
 	description: string;
 	image: string;
-	category: 'web' | 'mobile' | 'desktop' | 'other';
+	category: 'web' | 'linux' | 'desktop' | 'other';
 	techStack: string[];
-	status: 'completed' | 'in-progress' | 'planned';
+	status: 'completed' | 'updating' | 'planned';
 	liveDemo?: string;
 	sourceCode?: string;
 	startDate: string;
@@ -19,69 +19,80 @@ export interface Project {
 
 export const projectsData: Project[] = [
 	{
-		id: 'mizuki-blog',
-		title: 'Mizuki Blog Theme',
-		description: 'Modern blog theme developed based on the Astro framework, supporting multilingual, dark mode, and responsive design features.',
+		id: 'RemoteClipboard',
+		title: 'Remote Clipboard',
+		description: 'A cross-platform clipboard synchronization tool that connects through the internet.',
 		image: '',
-		category: 'web',
-		techStack: ['Astro', 'TypeScript', 'Tailwind CSS', 'Svelte'],
+		category: 'desktop',
+		techStack: ['C++', 'Qt', 'wayland', 'win32API', 'socket'],
 		status: 'completed',
-		liveDemo: 'https://blog.example.com',
-		sourceCode: 'https://github.com/example/mizuki',
-		startDate: '2024-01-01',
-		endDate: '2024-06-01',
+		sourceCode: 'https://github.com/ParadoxMoranis/RemoteClipboard',
+		startDate: '2024-12-16',
+		endDate: '2024-02-20',
 		featured: true,
-		tags: ['Blog', 'Theme', 'Open Source']
+		tags: ['Clipboard', 'TCP', 'Cross-platform', 'Linux', 'Lightweight']
 	},
 	{
-		id: 'portfolio-website',
-		title: 'Personal Portfolio',
-		description: 'Personal portfolio website showcasing project experience and technical skills.',
+		id: 'Source Sharing Website',
+		title: 'Moranis Site',
+		description: 'Source code sharing website, showing almoist all kinds of source.',
 		image: '',
 		category: 'web',
-		techStack: ['React', 'Next.js', 'TypeScript', 'Framer Motion'],
+		techStack: ['VUE3', 'Next.js', 'TypeScript', 'Element UI'],
 		status: 'completed',
-		liveDemo: 'https://portfolio.example.com',
-		sourceCode: 'https://github.com/example/portfolio',
-		startDate: '2023-09-01',
-		endDate: '2023-12-01',
+		liveDemo: 'https://moranis.site',
+		sourceCode: 'https://github.com/ParadoxMoranis/Toolkit-Moranis',
+		startDate: '2025-05-13',
+		endDate: '2023-5-028',
 		featured: true,
-		tags: ['Portfolio', 'React', 'Animation']
+		tags: ['Go-gin', 'VUE3', 'TypeScript', 'Element UI']
 	},
+	// {
+	// 	id: 'task-manager-app',
+	// 	title: 'Task Manager App',
+	// 	description: 'Cross-platform task management application supporting team collaboration and project management.',
+	// 	image: '',
+	// 	category: 'mobile',
+	// 	techStack: ['React Native', 'TypeScript', 'Redux', 'Firebase'],
+	// 	status: 'in-progress',
+	// 	startDate: '2024-03-01',
+	// 	tags: ['Mobile', 'Productivity', 'Team Collaboration']
+	// },
 	{
-		id: 'task-manager-app',
-		title: 'Task Manager App',
-		description: 'Cross-platform task management application supporting team collaboration and project management.',
-		image: '',
-		category: 'mobile',
-		techStack: ['React Native', 'TypeScript', 'Redux', 'Firebase'],
-		status: 'in-progress',
-		startDate: '2024-03-01',
-		tags: ['Mobile', 'Productivity', 'Team Collaboration']
-	},
-	{
-		id: 'data-visualization-tool',
-		title: 'Data Visualization Tool',
-		description: 'Data visualization tool supporting multiple chart types and interactive analysis.',
-		image: '',
-		category: 'web',
-		techStack: ['Vue.js', 'D3.js', 'TypeScript', 'Node.js'],
-		status: 'completed',
-		liveDemo: 'https://dataviz.example.com',
-		startDate: '2023-06-01',
-		endDate: '2023-11-01',
-		tags: ['Data Visualization', 'Analytics', 'Charts']
-	},
-	{
-		id: 'e-commerce-platform',
-		title: 'E-commerce Platform',
-		description: 'Full-stack e-commerce platform including user management, product management, and order processing features.',
+		id: 'go gin',
+		title: 'Go gin web guide',
+		description: 'Learn go gin with my examples.Go gin web guide, a web guide for gin framework.',
 		image: '',
 		category: 'web',
-		techStack: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'],
-		status: 'planned',
-		startDate: '2024-07-01',
-		tags: ['E-commerce', 'Full Stack', 'Payment Integration']
+		techStack: ['Go', 'Gin', 'Web'],
+		status: 'updating',
+		sourceCode: 'https://github.com/ParadoxMoranis/Innovation-Competition-for-the-Application-of-Educational-Information-Technology',
+		startDate: '2025-09-01',
+		endDate: '2025-9-07',
+		tags: ['competition', 'Operation and Maintenance']
+	},
+	// {
+	// 	id: 'e-commerce-platform',
+	// 	title: 'E-commerce Platform',
+	// 	description: 'Full-stack e-commerce platform including user management, product management, and order processing features.',
+	// 	image: '',
+	// 	category: 'web',
+	// 	techStack: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'],
+	// 	status: 'planned',
+	// 	startDate: '2024-07-01',
+	// 	tags: ['E-commerce', 'Full Stack', 'Payment Integration']
+	// }
+	{
+		id: 'competition',
+		title: 'Innovation-Competition-for-the-Application-of-Educational-Information-Technology',
+		description: 'Learning guide of Innovation Competition for the Application of Educational Information Technology',
+		image: '',
+		category: 'other',
+		techStack: ['Compitition', 'guide'],
+		status: 'updating',
+		sourceCode: 'https://github.com/ParadoxMoranis/Innovation-Competition-for-the-Application-of-Educational-Information-Technology',
+		startDate: '2025-09-01',
+		tags: ['competition', 'Operation and Maintenance']
 	}
 ];
 
@@ -89,7 +100,7 @@ export const projectsData: Project[] = [
 export const getProjectStats = () => {
 	const total = projectsData.length;
 	const completed = projectsData.filter(p => p.status === 'completed').length;
-	const inProgress = projectsData.filter(p => p.status === 'in-progress').length;
+	const inProgress = projectsData.filter(p => p.status === 'updating').length;
 	const planned = projectsData.filter(p => p.status === 'planned').length;
 
 	return {
