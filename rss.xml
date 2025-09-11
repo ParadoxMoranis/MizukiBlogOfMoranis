@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://moranisparadox.github.io/</link><language>en</language><item><title>Arch-关于wayland下获取录屏流</title><link>https://moranisparadox.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://moranisparadox.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://mizuki.mysqil.com/</link><language>en</language><item><title>Arch-关于wayland下获取录屏流</title><link>https://mizuki.mysqil.com/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://mizuki.mysqil.com/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
 &lt;h2&gt;1.安装pipewire以及相关包&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo pacman -S pipewire pipewire-pulse pipewire-alsa qt6-wayland
 &lt;/code&gt;&lt;/pre&gt;
@@ -9,7 +9,7 @@
 &lt;pre&gt;&lt;code&gt;sudo pacman -S xdg-desktop-portal-kde # 如果是hyprland就是xdg-desktop-portal-hyprland，以此类推
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;做完这些，OBS中就可以看到&lt;code&gt;屏幕捕捉(pipewire)&lt;/code&gt;&lt;/p&gt;
-</content:encoded></item><item><title>Arch-使用OBS的虚拟摄像头</title><link>https://moranisparadox.github.io/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</link><guid isPermaLink="true">https://moranisparadox.github.io/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</guid><description>本篇文章主要讲解如何使用OBS的虚拟摄像头。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;在Arch使用OBS的虚拟摄像头&lt;/h1&gt;
+</content:encoded></item><item><title>Arch-使用OBS的虚拟摄像头</title><link>https://mizuki.mysqil.com/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</link><guid isPermaLink="true">https://mizuki.mysqil.com/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</guid><description>本篇文章主要讲解如何使用OBS的虚拟摄像头。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;在Arch使用OBS的虚拟摄像头&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;检查 OBS Studio 版本&lt;/strong&gt;&lt;br /&gt;
@@ -94,7 +94,7 @@ sudo modprobe v4l2loopback
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://moranisparadox.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://moranisparadox.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
+</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://mizuki.mysqil.com/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://mizuki.mysqil.com/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
 &lt;h2&gt;一、pacman 用法&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pacman&lt;/code&gt;（Package Manager）是 Arch Linux 的核心包管理工具，用于安装、更新、删除和管理官方仓库中的软件包。它的命令通常需要以 &lt;code&gt;sudo&lt;/code&gt; 运行，因为包管理涉及系统级操作。&lt;/p&gt;
 &lt;h3&gt;1. 基本命令格式&lt;/h3&gt;
