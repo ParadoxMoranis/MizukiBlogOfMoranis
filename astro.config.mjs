@@ -29,7 +29,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 export default defineConfig({
 	site: " https://paradoxmoranis.github.io/MizukiBlogOfMoranis/",
 
-	base: "/MizukiBlogOfMoranis/",
+	base: "/",
 	trailingSlash: "always",
 	integrations: [
 		tailwind({
