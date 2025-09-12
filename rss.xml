@@ -93,7 +93,7 @@ sudo modprobe v4l2loopback
 在安装模块或更改配置后，重启 OBS Studio 或整个系统以确保所有更改生效。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;ArchWiki&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
 &lt;h2&gt;一、pacman 用法&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pacman&lt;/code&gt;（Package Manager）是 Arch Linux 的核心包管理工具，用于安装、更新、删除和管理官方仓库中的软件包。它的命令通常需要以 &lt;code&gt;sudo&lt;/code&gt; 运行，因为包管理涉及系统级操作。&lt;/p&gt;
