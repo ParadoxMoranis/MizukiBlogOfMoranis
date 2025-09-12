@@ -108,4 +108,4 @@ image: ''
 7. **重启 OBS 和系统**  
    在安装模块或更改配置后，重启 OBS Studio 或整个系统以确保所有更改生效。
 
-参考来源：[](https://wiki.archlinux.org/title/Open_Broadcaster_Software)[](https://bbs.archlinux.org/viewtopic.php?id=304978)[](https://bbs.archlinux.org/viewtopic.php?id=305169)
+参考来源：[ArchWiki](https://wiki.archlinux.org/title/Open_Broadcaster_Software)[](https://bbs.archlinux.org/viewtopic.php?id=304978)[](https://bbs.archlinux.org/viewtopic.php?id=305169)
