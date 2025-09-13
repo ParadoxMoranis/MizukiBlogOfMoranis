@@ -1,4 +1,86 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>Arch-关于wayland下获取录屏流</title><link>https://paradoxmoranis.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>qETRC在ArchLinxu的构建</title><link>https://paradoxmoranis.github.io/posts/qetrc/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/qetrc/</guid><description>本篇文章主要讲解如何在ArchLinux上构建qETRC。其他操作系统请自行搜索。</description><pubDate>Sat, 13 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;qETRC在ArchLinxu的构建方法&lt;/h1&gt;
+&lt;h2&gt;安装第三方库&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S base-devel cmake qt6-base qt6-tools qt6-declarative qt6-quickcontrols2 qt6-svg qt6-webengine qt6-webchannel qt6-webview qt6-websockets qt6-x11extras SARibbon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;子模块初始化&lt;/h2&gt;
+&lt;p&gt;在项目根目录下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git submodule init
+git submodule update
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后正常进行CMake构建即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir build
+cd build
+cmake ..
+make
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;问题&lt;/h2&gt;
+&lt;p&gt;在使用git子模块初始化SARibbon后，构建过程中出现了以下错误：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CMake Error at CMakeLists.txt:121 (get_target_property):
+  The LOCATION property may not be read from target &quot;SARibbonBar&quot;. Use the
+  target name directly with add_custom_command, or use the generator
+  expression $&amp;lt;TARGET_FILE&amp;gt;, as appropriate.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;-- SARibbon lib SARibbonBar_LIB_FILE-NOTFOUND
+-- Could NOT find QWindowKit (missing: QWindowKit_DIR)
+-- QWK not found, install not performed
+-- Flags:   -- -- -g -- -O3 -DNDEBUG
+-- Configuring incomplete, errors occurred!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;修改内容&lt;/h2&gt;
+&lt;h3&gt;1. 修改SARibbon安装部分&lt;/h3&gt;
+&lt;p&gt;将原来使用已弃用的LOCATION属性的代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (AUTO_INSTALL_SARibbon AND SARIBBON_FOUND)
+    get_target_property(SARibbonBar_LIB_FILE SARibbonBar LOCATION_${CMAKE_BUILD_TYPE})
+    message(STATUS &quot;SARibbon lib ${SARibbonBar_LIB_FILE}&quot;)
+    install(FILES ${SARibbonBar_LIB_FILE} DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改为使用CMake生成器表达式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (AUTO_INSTALL_SARibbon AND SARIBBON_FOUND)
+    # 使用generator表达式代替get_target_property，避免LOCATION属性错误
+    set(SARibbonBar_LIB_FILE &quot;$&amp;lt;TARGET_FILE:SARibbonBar&amp;gt;&quot;)
+    message(STATUS &quot;SARibbon lib ${SARibbonBar_LIB_FILE}&quot;)
+    install(TARGETS SARibbonBar DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;2. 修改QWindowKit安装部分&lt;/h3&gt;
+&lt;p&gt;同样，将QWindowKit相关的代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;find_package(QWindowKit CONFIG)
+if (QWindowKit_FOUND)
+    get_target_property(QWK_CORE_FILE QWindowKit::Core LOCATION_${CMAKE_BUILD_TYPE})
+    get_target_property(QWK_WIDGETS_FILE QWindowKit::Widgets LOCATION_${CMAKE_BUILD_TYPE})
+    message(STATUS &quot;QWK lib ${QWK_CORE_FILE}&quot;)
+    install(FILES ${QWK_CORE_FILE} ${QWK_WIDGETS_FILE} DESTINATION ${CMAKE_INSTALL_BINDIR})
+else()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改为：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;find_package(QWindowKit CONFIG)
+if (QWindowKit_FOUND)
+    # 使用generator表达式代替get_target_property，避免LOCATION属性错误
+    set(QWK_CORE_FILE &quot;$&amp;lt;TARGET_FILE:QWindowKit::Core&amp;gt;&quot;)
+    set(QWK_WIDGETS_FILE &quot;$&amp;lt;TARGET_FILE:QWindowKit::Widgets&amp;gt;&quot;)
+    message(STATUS &quot;QWK lib ${QWK_CORE_FILE}&quot;)
+    install(TARGETS QWindowKit::Core QWindowKit::Widgets DESTINATION ${CMAKE_INSTALL_BINDIR})
+else()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;修改原因&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;LOCATION属性已弃用&lt;/strong&gt;：CMake官方已经弃用了LOCATION属性，因为它在生成器表达式和多配置生成器中存在问题。错误信息明确建议使用生成器表达式&lt;code&gt;$&amp;lt;TARGET_FILE&amp;gt;&lt;/code&gt;代替。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装方式更新&lt;/strong&gt;：将&lt;code&gt;install(FILES ...)&lt;/code&gt;改为&lt;code&gt;install(TARGETS ...)&lt;/code&gt;是更现代的CMake做法，它能够正确处理所有依赖关系和平台特定的安装规则。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;生成器表达式的优势&lt;/strong&gt;：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;生成器表达式在构建时而非配置时求值，更适合多配置生成器（如Visual Studio）&lt;/li&gt;
+&lt;li&gt;能够正确处理不同构建类型（Debug/Release）的目标文件路径&lt;/li&gt;
+&lt;li&gt;自动处理平台特定的文件扩展名和前缀（如Windows的.dll，Linux的.so）&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded></item><item><title>Arch-关于wayland下获取录屏流</title><link>https://paradoxmoranis.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
 &lt;h2&gt;1.安装pipewire以及相关包&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo pacman -S pipewire pipewire-pulse pipewire-alsa qt6-wayland
 &lt;/code&gt;&lt;/pre&gt;
