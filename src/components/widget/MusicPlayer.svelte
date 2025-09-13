@@ -12,7 +12,7 @@ import Key from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
 
 // 音乐播放器模式，可选 "local" 或 "meting"，从本地配置中获取或使用默认值 "meting"
-let mode = musicPlayerConfig.mode ?? "meting";
+let mode = musicPlayerConfig.mode ?? "local";
 // Meting API 地址，从配置中获取或使用默认地址(bilibili.uno(由哔哩哔哩松坂有希公益管理)),服务器在海外,部分音乐平台可能不支持并且速度可能慢,也可以自建Meting API
 let meting_api =
 	musicPlayerConfig.meting_api ??
@@ -68,28 +68,157 @@ let volumeBar: HTMLElement;
 const localPlaylist = [
 	{
 		id: 1,
-		title: "ひとり上手",
-		artist: "Kaya",
-		cover: "assets/music/cover/hitori.jpg",
-		url: "assets/music/url/hitori.mp3",
+		title: "把回忆拼好给你",
+		artist: "王贰浪",
+		cover: "assets/music/cover/把回忆拼好给你.jpg",
+		url: "assets/music/url/把回忆拼好给你.mp3",
 		duration: 240,
 	},
 	{
 		id: 2,
-		title: "眩耀夜行",
-		artist: "スリーズブーケ",
-		cover: "assets/music/cover/xryx.jpg",
-		url: "assets/music/url/xryx.mp3",
+		title: "斑马斑马",
+		artist: "宋东野",
+		cover: "assets/music/cover/斑马斑马.jpg",
+		url: "assets/music/url/斑马斑马.mp3",
 		duration: 180,
 	},
 	{
 		id: 3,
-		title: "春雷の頃",
-		artist: "22/7",
-		cover: "assets/music/cover/cl.jpg",
-		url: "assets/music/url/cl.mp3",
+		title: "不要说话",
+		artist: "陈奕迅",
+		cover: "assets/music/cover/不要说话.png",
+		url: "assets/music/url/不要说话.mp3",
 		duration: 200,
 	},
+    {
+		id: 4,
+		title: "程艾影",
+		artist: "赵雷",
+		cover: "assets/music/cover/程艾影.jpg",
+		url: "assets/music/url/程艾影.mp3",
+		duration: 200,
+	},
+    {
+		id: 5,
+		title: "朵",
+		artist: "赵雷",
+		cover: "assets/music/cover/朵.jpg",
+		url: "assets/music/url/朵.mp3",
+		duration: 200,
+	},
+    {
+		id: 6,
+		title: "房间",
+		artist: "刘瑞琦",
+		cover: "assets/music/cover/房间.jpg",
+		url: "assets/music/url/房间.mp3",
+		duration: 200,
+	},
+    {
+		id: 7,
+		title: "富士山下",
+		artist: "陈奕迅",
+		cover: "assets/music/cover/富士山下.png",
+		url: "assets/music/url/富士山下.mp3",
+		duration: 200,
+	},
+    {
+		id: 8,
+		title: "孤独患者",
+		artist: "陈奕迅",
+		cover: "assets/music/cover/孤独患者.jpg",
+		url: "assets/music/url/孤独患者.mp3",
+		duration: 200,
+	},
+    {
+		id: 9,
+		title: "怪咖",
+		artist: "薛之谦",
+		cover: "assets/music/cover/怪咖.png",
+        url: "assets/music/url/怪咖.mp3",
+		duration: 200,
+	},
+    {
+		id: 10,
+		title: "南方姑娘",  
+		artist: "赵雷",
+		cover: "assets/music/cover/南方姑娘.jpg",
+		url: "assets/music/url/南方姑娘.mp3",
+		duration: 200,
+	},
+    {
+		id: 11,
+		title: "十面埋伏",
+		artist: "陈奕迅",
+		cover: "assets/music/cover/十面埋伏.png",
+		url: "assets/music/url/十面埋伏.mp3",
+		duration: 200,
+	},
+    {
+		id: 12,
+		title: "我只能离开",
+		artist: "颜人中",
+		cover: "assets/music/cover/我只能离开.png",
+		url: "assets/music/url/我只能离开.mp3",
+		duration: 200,
+	},
+    {
+		id: 13,
+		title: "下一个天亮",
+		artist: "郭静",
+		cover: "assets/music/cover/下一个天亮.png",
+		url: "assets/music/url/下一个天亮.mp3",
+		duration: 200,
+	},
+    {
+		id: 14,
+		title: "像风一样",
+		artist: "薛之谦",
+		cover: "assets/music/cover/像风一样.jpg",
+		url: "assets/music/url/像风一样.mp3",
+		duration: 200,
+	},
+    {
+		id: 15,
+		title: "最初的记忆",
+		artist: "徐佳莹",
+		cover: "assets/music/cover/最初的记忆.jpg",
+        url: "assets/music/url/最初的记忆.mp3",
+		duration: 200,
+    },
+    {
+		id: 16,
+		title: "CruelSummer",
+		artist: "Talor Swift",
+		cover: "assets/music/cover/CruelSummer.png",
+		url: "assets/music/url/CruelSummer.mp3",
+		duration: 200,
+	},
+    {
+		id: 17,
+		title: "exile",
+		artist: "Talor Swift",
+		cover: "assets/music/cover/exile.png",
+		url: "assets/music/url/exile.mp3",
+		duration: 200,
+	},
+    {
+		id: 18,
+		title: "OneLastKiss",
+		artist: "宇多田ヒカル",
+		cover: "assets/music/cover/OneLastKiss.jpg",
+		url: "assets/music/url/OneLastKiss.mp3",
+		duration: 200,
+	},
+    {
+		id: 19,
+		title: "WhoSays",
+		artist: "Selena Gomez",
+		cover: "assets/music/cover/WhoSays.jpg",
+		url: "assets/music/url/WhoSays.mp3",
+		duration: 200,
+	}
+
 ];
 
 async function fetchMetingPlaylist() {
