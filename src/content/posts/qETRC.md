@@ -7,7 +7,7 @@ tags: [ArchLinux, Railway, qETRC]
 category: Qt Application Build
 author: MoranisZ
 draft: false
-date: 2025-09-11
+date: 2025-09-13
 image: ''
 ---
 
