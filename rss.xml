@@ -1,4 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>TransBench论文解读</title><link>https://paradoxmoranis.github.io/posts/transbench/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/transbench/</guid><description>本篇文章主要是我个人对阿里巴巴和北京语言大学关于机器翻译MT在工业级领域的应用提出的新标准TransBench的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;TransBench&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>对MT领域一些新的理解</title><link>https://paradoxmoranis.github.io/posts/%E5%AF%B9mt%E9%A2%86%E5%9F%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B0%E7%9A%84%E4%BA%86%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%AF%B9mt%E9%A2%86%E5%9F%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B0%E7%9A%84%E4%BA%86%E8%A7%A3/</guid><description>最近一直在读论文，也是第一次读这么多专业的论文，记录一下收获</description><pubDate>Wed, 17 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;MT领域一些新的理解&lt;/h1&gt;
+&lt;h2&gt;对于翻译质量的一些指标&lt;/h2&gt;
+&lt;h3&gt;TransBench&lt;/h3&gt;
+&lt;p&gt;阿里巴巴和北京语言大学联合发布了翻译质量评估框架&lt;a href=&quot;https://arxiv.org/pdf/2505.14244.pdf&quot;&gt;TransBench&lt;/a&gt;，这个模型提出了三层评估标准，分别为场景适应性、文化忠实度、通用能力。重点评估了当前机器翻译模型在不同场景下的翻译质量。他使用 Marco-MOS（领域特定模型）作为新指标，与 BLEU/TER 结合，强调工业场景（如电商）的鲁棒性。&lt;/p&gt;
+&lt;h3&gt;FRMT&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://arxiv.org/pdf/2210.00193.pdf&quot;&gt;FRMT&lt;/a&gt;重点关注句子级的翻译，聚焦于few-shot region-aware机器翻译（MT），即使用少量示例来控制翻译输出适应特定区域变体。这种方法更多是为了少数的小语种变种而存在。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;few-shot region-aware MT 是一种智能翻译方法：模型先学会基本翻译（用大量无标签数据），然后通过少量区域示例（exemplars），在翻译时快速调整输出，让结果适合特定区域（如巴西或台湾）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;M3T&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://arxiv.org/pdf/2406.08255.pdf&quot;&gt;M3T&lt;/a&gt;虽然在考虑文档布局对翻译的影响，但是重点仍然关注在翻译质量，没有对译后文档的布局质量做评估，更多是测试模型利用布局能力。&lt;/p&gt;
+&lt;h3&gt;三者的异同&lt;/h3&gt;
+&lt;p&gt;1.&lt;strong&gt;关注点&lt;/strong&gt; ：三个评估基准均关注在翻译质量上，使用不同的基准测试集，关注与不同方面的翻译质量。TransBench和FRMT都更多的考虑句子级翻译，TransBench关注通用机器翻译，FRMT更关注区域变体的翻译，M3T更关注文档布局对翻译的影响。
+2.&lt;strong&gt;数据集&lt;/strong&gt; ：TransBench使用语言对的标注方式。针对不同的层次和不同的评估标准有不同的标注内容。属于句子级/段落级的数据。FRMT使用多层分类标注的数据集，先将数据分为三个“桶”，每个桶再分exemplar（提示用，少量）、dev（调参用）和test（最终测用）。M3T的数据集主要是文档，标注内容主要是视觉元组。标注方法类似于框框，将不同的内容（例如文字，图片，表格等）“框起来”，并标注类型，阅读顺序等信息。&lt;/p&gt;
+&lt;h2&gt;一些数据集&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/pdf/2006.01038.pdf&quot;&gt;DocBank&lt;/a&gt;是一个用于文档布局分析的基准数据集。焦点是解决传统文档布局分析依赖视觉模型而忽略文本信息的问题。其标注方式是对文档页面进行token级别的标注。有摘要，作者，表格，公式等标注。相对于M3T，DocBank更关注文档布局，标注也更加精细，M3T更关注文档翻译和布局保持，拥有源-目标对,有对翻译质量的侧重。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ibm-aur-nlp/PubLayNet&quot;&gt;PubLayNet&lt;/a&gt;最大的公开文档布局数据集，它通过弱监督自动生成：匹配 PDF 的 XML 表示与内容，创建布局标注。包含边界框，多边形切割。属于页面级和元素级。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/pdf/2006.01038.pdf&quot;&gt;DocLayNet&lt;/a&gt; 是一个用于文档布局分析的基准数据集。焦点是布局分割，支持工业应用如信息提取。采用COCO格式，有许多种标签。同样更注重文档布局分析，不关注翻译质量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这三者均采用Bounding Box Annotation 或 Axis-Aligned Bounding Boxes (AABB)的标注方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;我的看法&lt;/h2&gt;
+&lt;h3&gt;MT领域现在存在的一些问题&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;机器翻译模型应用于工业场景时，由于通用基准中缺乏领域特定术语、文化细微差别和文体惯例，暴露出关键局限性。现有评估框架无法充分评估专业场景中的性能，导致学术基准与实际效能之间存在差距。&lt;/li&gt;
+&lt;li&gt;在对一些文档类型，尤其是PDF这种生来似乎就是不可变的文件类型缺乏有效的处理。不仅存在不同场景的翻译质量问题，更重要的是难以处理PDF的布局，图片，表格等各种内容。导致翻译出来的文档阅读体验非常差。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我们缺乏一种统一的标准，用来评估机器翻译在工业级的应用场景下的性能。包括对翻译质量的评估和对文档布局（尤其译后）的评估。&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded></item><item><title>TransBench论文解读</title><link>https://paradoxmoranis.github.io/posts/transbench/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/transbench/</guid><description>本篇文章主要是我个人对阿里巴巴和北京语言大学关于机器翻译MT在工业级领域的应用提出的新标准TransBench的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;TransBench&lt;/h1&gt;
 &lt;h2&gt;概述&lt;/h2&gt;
 &lt;p&gt;TransBench通过三个方面评估机器翻译在工业级翻译的表现：&lt;/p&gt;
 &lt;ul&gt;
@@ -135,7 +165,7 @@ TransBench提供了翻译评估的结构化框架，公开的电商翻译基准�
 &lt;/ul&gt;
 &lt;h2&gt;总结&lt;/h2&gt;
 &lt;p&gt;从我的个人观点看来TransBench根据自己提出的多层次评估指标，将传统的工业级机器翻译MT指标和标准分别应用到各个层次，形成一套新的标准。其数据集也是根据不同的层次有不同的标注方法。&lt;/p&gt;
-</content:encoded></item><item><title>TransBench论文解读</title><link>https://paradoxmoranis.github.io/posts/m3t/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/m3t/</guid><description>本篇文章主要是我个人对M3T这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;我对M3T的看法&lt;/h1&gt;
+</content:encoded></item><item><title>M3T论文解读</title><link>https://paradoxmoranis.github.io/posts/m3t/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/m3t/</guid><description>本篇文章主要是我个人对M3T这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;我对M3T的看法&lt;/h1&gt;
 &lt;h3&gt;概述&lt;/h3&gt;
 &lt;h4&gt;核心内容&lt;/h4&gt;
 &lt;p&gt;传统MT系统主要处理句子级文本，忽略文档的整体上下文和布局（如PDF中的多列、表格、标题），这会导致OCR错误或翻译质量下降。M3T数据集旨在解决这个问题，测试模型能否利用视觉线索（如布局信息）来改善翻译，尤其是对复杂PDF文档。&lt;/p&gt;
@@ -197,6 +227,19 @@ TransBench提供了翻译评估的结构化框架，公开的电商翻译基准�
 &lt;hr /&gt;
 &lt;p&gt;我认为，M3T注重于文档翻译的前后阅读顺序的一致性，不太关注&lt;/p&gt;
 &lt;p&gt;翻译的质量，与TransBench互补。或许两个标准结合可以形成在机器翻译的工业级应用领域的全新的，全面的标准。&lt;/p&gt;
+</content:encoded></item><item><title>FRMT论文解读</title><link>https://paradoxmoranis.github.io/posts/frmt/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/frmt/</guid><description>本篇文章主要是我个人对FRMT这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;FRMT阅读总结&lt;/h1&gt;
+&lt;h2&gt;论文主要内容&lt;/h2&gt;
+&lt;p&gt;传统MT系统往往偏向网络上数据量大的“多数派”变体（如巴西葡萄牙语），忽略少数派变体，导致用户体验差。论文提出FRMT数据集作为基准，测试模型在few-shot设置下的适应能力（图1展示用exemplars控制输出，如bus翻译为ônibus或autocarro）。贡献包括：(1) 构建FRMT数据集；(2) 评估自动指标和人类评测的相关性；(3) 提供基线模型；(4) 给出训练、评估和比较模型的指南。论文强调few-shot方法能推广到其他风格或区域，而不需大量标注数据。
+相关工作部分回顾了风格转移（style transfer）和变体针对MT（如区域、礼貌级），但多数需大量标注数据。FRMT强调few-shot，数据集设计针对区域差异，并包括潜在干扰项。&lt;/p&gt;
+&lt;h2&gt;数据集&lt;/h2&gt;
+&lt;p&gt;FRMT的数据集被分为三个“桶”，也就是三个类别或者说是子集。每个类别用于针对不同类型的挑战和问题。
+FRMT总数据分成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Lexical桶（词汇桶）：焦点是区域特定词汇。收集了像“bus”这样的词（巴西译“ônibus”，葡萄牙译“autocarro”），从Wikipedia相关页面取句子。目的是考模型能不能根据exemplar，正确用区域专有词，而不是混用。&lt;/li&gt;
+&lt;li&gt;Entity桶（实体桶）：焦点是区域关联实体，如地名（里斯本 vs. 圣保罗）。句子从这些实体的Wikipedia页面取。目的是加“干扰项”（distractors），考模型别被预训练偏见骗了（比如模型默认偏巴西，就错译葡萄牙实体）。&lt;/li&gt;
+&lt;li&gt;Random桶（随机桶）：自然随机采样Wikipedia好文章的句子，没特定主题。目的是模拟日常翻译，考整体表现。同一源句有所有区域的翻译参考。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;每个桶再分exemplar（提示用，少量）、dev（调参用）和test（最终测用）。总共几千句，分桶让评估更精准：比如lexical桶测词汇准确，entity测抗干扰。M3T也类似，分来源（如EUR-Lex桶），但焦点是布局而非区域。&lt;/p&gt;
 </content:encoded></item><item><title>qETRC在ArchLinxu的构建</title><link>https://paradoxmoranis.github.io/posts/qetrc/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/qetrc/</guid><description>本篇文章主要讲解如何在ArchLinux上构建qETRC。其他操作系统请自行搜索。</description><pubDate>Sat, 13 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;qETRC在ArchLinxu的构建方法&lt;/h1&gt;
 &lt;h2&gt;安装第三方库&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo pacman -S base-devel cmake qt6-base qt6-tools qt6-declarative qt6-quickcontrols2 qt6-svg qt6-webengine qt6-webchannel qt6-webview qt6-websockets qt6-x11extras SARibbon
