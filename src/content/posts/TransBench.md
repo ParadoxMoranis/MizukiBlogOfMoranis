@@ -3,7 +3,7 @@ title: TransBench论文解读
 published: 2025-09-16
 pinned: false
 description: 本篇文章主要是我个人对阿里巴巴和北京语言大学关于机器翻译MT在工业级领域的应用提出的新标准TransBench的看法。仅代表个人观点。
-tags: [ArchLinux, Railway, qETRC]
+tags: [MachineTranslate,BenchMark]
 category: MT,MachineTranslate
 author: MoranisZ
 draft: false
