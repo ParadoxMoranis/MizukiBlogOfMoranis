@@ -1,4 +1,113 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>对MT领域一些新的理解</title><link>https://paradoxmoranis.github.io/posts/%E5%AF%B9mt%E9%A2%86%E5%9F%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B0%E7%9A%84%E4%BA%86%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%AF%B9mt%E9%A2%86%E5%9F%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B0%E7%9A%84%E4%BA%86%E8%A7%A3/</guid><description>最近一直在读论文，也是第一次读这么多专业的论文，记录一下收获</description><pubDate>Wed, 17 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;MT领域一些新的理解&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>WSL的特性以及一些使用技巧</title><link>https://paradoxmoranis.github.io/posts/wsl%E7%9A%84%E4%BD%BF%E7%94%A8/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/wsl%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>本篇文章主要讲解WSL的特性以及一些使用技巧。</description><pubDate>Mon, 13 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;前情提要&lt;/h1&gt;
+&lt;p&gt;最近在使用MinerU，发现MinerU使用的vLLM加速不支持Windows，而且我的ArchLinux的机器没有显卡，所以想到了WSL。用了一下感觉还不错，写一篇文章记录一下。&lt;/p&gt;
+&lt;h2&gt;1.WSL的特性（仅在我使用中的感受）&lt;/h2&gt;
+&lt;h3&gt;1. 跨系统文件操作&lt;/h3&gt;
+&lt;p&gt;在 WSL 中，如果你修改了通过挂载的 Windows 文件系统（如 &lt;code&gt;/mnt/c/Users/Moranis/Desktop/&lt;/code&gt;），这些修改也会反映到 Windows 系统中。原因如下：&lt;/p&gt;
+&lt;h4&gt;工作原理&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL 通过挂载机制将 Windows 文件系统（通常位于 &lt;code&gt;/mnt/c&lt;/code&gt;）映射到 Linux 子系统中。&lt;code&gt;/mnt/c/Users/Moranis/Desktop/&lt;/code&gt; 实际上是 Windows 桌面目录的 Linux 表示。&lt;/li&gt;
+&lt;li&gt;WSL 使用的是同一份底层文件系统，因此对挂载目录的任何修改（创建、编辑、删除文件等）都会直接同步到 Windows 的对应位置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;验证与注意事项&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;建议的最佳实践&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;使用 WSL 原生目录&lt;/strong&gt;：为避免性能问题或兼容性问题，建议将挂载项目复制或移动到 WSL 的 Linux 文件系统（如 &lt;code&gt;~/projects/MinerU&lt;/code&gt;），而不是挂载的 Windows 目录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;检查文件所有权&lt;/strong&gt;：在 WSL 中，挂载的 Windows 文件默认由 root 拥有，可能需要调整权限：&lt;pre&gt;&lt;code&gt;sudo chown -R $USER:$USER ~/projects/MinerU
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;例外情况&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果你使用了 WSL 2（默认从 Windows 10 2004 开始），文件系统是基于虚拟磁盘（ext4），挂载的 Windows 文件系统仍是 NTFS，修改仍会同步。&lt;/li&gt;
+&lt;li&gt;如果项目包含符号链接或特殊文件，跨系统操作可能导致问题，建议保持在单一文件系统内。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;2. 启动默认挂载&lt;/h3&gt;
+&lt;p&gt;在Windows某目录启动wsl，如果不指定启动目录的话，可能会将当前的运行目录作为启动目录，还需要额外的跳转。&lt;br /&gt;
+所以在启动时推荐使用指定启动目录的启动方式。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wsl ~ -d &amp;lt;发行版&amp;gt; -u &amp;lt;user&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;GPU支持&lt;/h3&gt;
+&lt;p&gt;WSL 2 支持使用 Windows 主机的显卡，主要适用于 AI 和图形处理。支持情况如下：&lt;/p&gt;
+&lt;p&gt;NVIDIA GPU：通过安装 NVIDIA WSL 专用驱动（版本 &amp;gt;= 535.98 或 535.104，Windows 10 21H2+ 或 Windows 11），可在 WSL 中运行 CUDA 应用，如 PyTorch。无需在 WSL 内安装驱动。&lt;br /&gt;
+AMD GPU：部分支持，通过 ROCm 平台（需 WDDM 2.9+ 驱动），适合 Llama 和 Stable Diffusion，但不如 NVIDIA 成熟。&lt;br /&gt;
+Intel GPU：支持 oneAPI 和 DirectML，安装 Intel 驱动后可通过 intel-opencl-icd 配置。&lt;/p&gt;
+&lt;p&gt;配置步骤：&lt;/p&gt;
+&lt;p&gt;确保 WSL 2 启用（wsl --set-default-version 2）。&lt;br /&gt;
+安装厂商驱动并验证（例如 nvidia-smi）。&lt;br /&gt;
+安装支持库，如 pip install torch --index-url https://download.pytorch.org/whl/cu121。&lt;/p&gt;
+&lt;p&gt;注意：WSL 使用 GPU-PV 技术，性能接近原生但有轻微开销。&lt;/p&gt;
+&lt;h2&gt;2.一些使用技巧&lt;/h2&gt;
+&lt;h3&gt;WSL 如何同步主机的网络代理？&lt;/h3&gt;
+&lt;p&gt;WSL 2 默认使用 NAT 网络，不自动同步 Windows 代理。同步方法：&lt;/p&gt;
+&lt;h4&gt;自动同步（Windows 11 22H2+）：&lt;/h4&gt;
+&lt;p&gt;编辑 C:\Users\你的用户名.wslconfig，添加：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[wsl2]
+networkingMode=mirrored
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重启 WSL（wsl --shutdown）。&lt;/p&gt;
+&lt;h4&gt;手动配置：&lt;/h4&gt;
+&lt;p&gt;获取主机 IP：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /etc/resolv.conf | grep nameserver | awk &apos;{print $2}&apos;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;设置环境变量（临时）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;textexport http_proxy=http://&amp;lt;主机IP&amp;gt;:&amp;lt;端口&amp;gt;
+export https_proxy=http://&amp;lt;主机IP&amp;gt;:&amp;lt;端口&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;永久设置：&lt;/h4&gt;
+&lt;p&gt;编辑 ~/.bashrc 添加上述命令，&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;针对工具配置：&lt;/h4&gt;
+&lt;p&gt;apt：创建 /etc/apt/apt.conf.d/proxy.conf：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;textAcquire::http::Proxy &quot;http://&amp;lt;主机IP&amp;gt;:&amp;lt;端口&amp;gt;&quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;git：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global http.proxy http://&amp;lt;主机IP&amp;gt;:&amp;lt;端口&amp;gt;。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意：确保代理允许 LAN 连接，测试用 curl google.com。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;%USERPROFILE%.wslconfig 在哪？&lt;/h3&gt;
+&lt;p&gt;位置：C:\Users\你的用户名.wslconfig（例如 C:\Users\Moranis.wslconfig）。
+操作：&lt;/p&gt;
+&lt;p&gt;在文件资源管理器输入 %USERPROFILE% 进入用户目录。
+创建 .wslconfig 文件，添加配置（如内存限制）。
+保存后 wsl --shutdown 应用。&lt;/p&gt;
+&lt;h3&gt;WSL 默认有内存、线程等限制吗？&lt;/h3&gt;
+&lt;p&gt;WSL 2 默认动态分配资源，但有隐性限制：&lt;/p&gt;
+&lt;p&gt;内存：占用主机 50%-80% 可用内存，无硬性上限，但可能受竞争影响。
+CPU 核心：默认使用所有核心，但分配受主机负载限制。
+磁盘：虚拟硬盘初始 1GB，最大 256GB 或主机 80% 空间。&lt;/p&gt;
+&lt;h4&gt;自定义：&lt;/h4&gt;
+&lt;p&gt;编辑 .wslconfig：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[wsl2]
+memory=8GB
+processors=4
+swap=2GB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重启 WSL 应用。&lt;/p&gt;
+&lt;p&gt;验证：free -h（内存）、nproc（核心）。&lt;/p&gt;
+&lt;h3&gt;WSL 在某个端口启动服务，主机可以访问吗？&lt;/h3&gt;
+&lt;p&gt;可以，通过端口转发实现：&lt;/p&gt;
+&lt;p&gt;启用 localhostForwarding：&lt;/p&gt;
+&lt;p&gt;在 .wslconfig 添加：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[wsl2]
+localhostForwarding=true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启动服务：uv run mineru-gradio --server-name 0.0.0.0 --server-port 7860。
+主机访问：http://localhost:7860。&lt;/p&gt;
+&lt;p&gt;手动转发：&lt;/p&gt;
+&lt;p&gt;查找 WSL IP：ip addr show eth0 | grep inet。
+转发端口：netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=8000 connectaddress=172.XX.XX.XX connectport=8000。
+访问：http://localhost:8000。&lt;/p&gt;
+&lt;p&gt;注意：确保防火墙允许端口，测试用 curl http://localhost:7860。&lt;/p&gt;
+</content:encoded></item><item><title>对MT领域一些新的理解</title><link>https://paradoxmoranis.github.io/posts/%E5%AF%B9mt%E9%A2%86%E5%9F%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B0%E7%9A%84%E4%BA%86%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%AF%B9mt%E9%A2%86%E5%9F%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B0%E7%9A%84%E4%BA%86%E8%A7%A3/</guid><description>最近一直在读论文，也是第一次读这么多专业的论文，记录一下收获</description><pubDate>Wed, 17 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;MT领域一些新的理解&lt;/h1&gt;
 &lt;h2&gt;对于翻译质量的一些指标&lt;/h2&gt;
 &lt;h3&gt;TransBench&lt;/h3&gt;
 &lt;p&gt;阿里巴巴和北京语言大学联合发布了翻译质量评估框架&lt;a href=&quot;https://arxiv.org/pdf/2505.14244.pdf&quot;&gt;TransBench&lt;/a&gt;，这个模型提出了三层评估标准，分别为场景适应性、文化忠实度、通用能力。重点评估了当前机器翻译模型在不同场景下的翻译质量。他使用 Marco-MOS（领域特定模型）作为新指标，与 BLEU/TER 结合，强调工业场景（如电商）的鲁棒性。&lt;/p&gt;
@@ -8,10 +117,10 @@
 &lt;p&gt;few-shot region-aware MT 是一种智能翻译方法：模型先学会基本翻译（用大量无标签数据），然后通过少量区域示例（exemplars），在翻译时快速调整输出，让结果适合特定区域（如巴西或台湾）。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3&gt;M3T&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://arxiv.org/pdf/2406.08255.pdf&quot;&gt;M3T&lt;/a&gt;虽然在考虑文档布局对翻译的影响，但是重点仍然关注在翻译质量，没有对译后文档的布局质量做评估，更多是测试模型利用布局能力。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://arxiv.org/pdf/2406.08255.pdf&quot;&gt;M3T&lt;/a&gt;虽然在考虑文档布局对翻译的影响，但是重点仍然关注在翻译质量，没有对译后文档的布局质量做评估，更多是测试模型利用布局能力。此外M3T的数据集还标注了阅读顺序，这对于译后文档的布局评估可能会有作用。&lt;/p&gt;
 &lt;h3&gt;三者的异同&lt;/h3&gt;
 &lt;p&gt;1.&lt;strong&gt;关注点&lt;/strong&gt; ：三个评估基准均关注在翻译质量上，使用不同的基准测试集，关注与不同方面的翻译质量。TransBench和FRMT都更多的考虑句子级翻译，TransBench关注通用机器翻译，FRMT更关注区域变体的翻译，M3T更关注文档布局对翻译的影响。
-2.&lt;strong&gt;数据集&lt;/strong&gt; ：TransBench使用语言对的标注方式。针对不同的层次和不同的评估标准有不同的标注内容。属于句子级/段落级的数据。FRMT使用多层分类标注的数据集，先将数据分为三个“桶”，每个桶再分exemplar（提示用，少量）、dev（调参用）和test（最终测用）。M3T的数据集主要是文档，标注内容主要是视觉元组。标注方法类似于框框，将不同的内容（例如文字，图片，表格等）“框起来”，并标注类型，阅读顺序等信息。&lt;/p&gt;
+2.&lt;strong&gt;数据集&lt;/strong&gt; ：TransBench使用语言对的标注方式。针对不同的层次和不同的评估标准有不同的标注内容。属于句子级/段落级的数据。FRMT使用多层分类标注的数据集，先将数据分为三个“桶”，每个桶再分exemplar（提示用，少量）、dev（调参用）和test（最终测用）。M3T的数据集主要是文档，标注内容主要是视觉元组。标注方法类似于框框，将不同的内容（例如文字，图片，表格等）“框起来”，并标注类型，&lt;strong&gt;阅读顺序&lt;/strong&gt;等信息。&lt;/p&gt;
 &lt;h2&gt;一些数据集&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://arxiv.org/pdf/2006.01038.pdf&quot;&gt;DocBank&lt;/a&gt;是一个用于文档布局分析的基准数据集。焦点是解决传统文档布局分析依赖视觉模型而忽略文本信息的问题。其标注方式是对文档页面进行token级别的标注。有摘要，作者，表格，公式等标注。相对于M3T，DocBank更关注文档布局，标注也更加精细，M3T更关注文档翻译和布局保持，拥有源-目标对,有对翻译质量的侧重。&lt;/li&gt;
@@ -28,6 +137,81 @@
 &lt;li&gt;在对一些文档类型，尤其是PDF这种生来似乎就是不可变的文件类型缺乏有效的处理。不仅存在不同场景的翻译质量问题，更重要的是难以处理PDF的布局，图片，表格等各种内容。导致翻译出来的文档阅读体验非常差。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;我们缺乏一种统一的标准，用来评估机器翻译在工业级的应用场景下的性能。包括对翻译质量的评估和对文档布局（尤其译后）的评估。&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</content:encoded></item><item><title>FRMT论文解读</title><link>https://paradoxmoranis.github.io/posts/frmt/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/frmt/</guid><description>本篇文章主要是我个人对FRMT这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;FRMT阅读总结&lt;/h1&gt;
+&lt;h2&gt;论文主要内容&lt;/h2&gt;
+&lt;p&gt;传统MT系统往往偏向网络上数据量大的“多数派”变体（如巴西葡萄牙语），忽略少数派变体，导致用户体验差。论文提出FRMT数据集作为基准，测试模型在few-shot设置下的适应能力（图1展示用exemplars控制输出，如bus翻译为ônibus或autocarro）。贡献包括：(1) 构建FRMT数据集；(2) 评估自动指标和人类评测的相关性；(3) 提供基线模型；(4) 给出训练、评估和比较模型的指南。论文强调few-shot方法能推广到其他风格或区域，而不需大量标注数据。
+相关工作部分回顾了风格转移（style transfer）和变体针对MT（如区域、礼貌级），但多数需大量标注数据。FRMT强调few-shot，数据集设计针对区域差异，并包括潜在干扰项。&lt;/p&gt;
+&lt;h2&gt;数据集&lt;/h2&gt;
+&lt;p&gt;FRMT的数据集被分为三个“桶”，也就是三个类别或者说是子集。每个类别用于针对不同类型的挑战和问题。
+FRMT总数据分成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Lexical桶（词汇桶）：焦点是区域特定词汇。收集了像“bus”这样的词（巴西译“ônibus”，葡萄牙译“autocarro”），从Wikipedia相关页面取句子。目的是考模型能不能根据exemplar，正确用区域专有词，而不是混用。&lt;/li&gt;
+&lt;li&gt;Entity桶（实体桶）：焦点是区域关联实体，如地名（里斯本 vs. 圣保罗）。句子从这些实体的Wikipedia页面取。目的是加“干扰项”（distractors），考模型别被预训练偏见骗了（比如模型默认偏巴西，就错译葡萄牙实体）。&lt;/li&gt;
+&lt;li&gt;Random桶（随机桶）：自然随机采样Wikipedia好文章的句子，没特定主题。目的是模拟日常翻译，考整体表现。同一源句有所有区域的翻译参考。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;每个桶再分exemplar（提示用，少量）、dev（调参用）和test（最终测用）。总共几千句，分桶让评估更精准：比如lexical桶测词汇准确，entity测抗干扰。M3T也类似，分来源（如EUR-Lex桶），但焦点是布局而非区域。&lt;/p&gt;
+</content:encoded></item><item><title>M3T论文解读</title><link>https://paradoxmoranis.github.io/posts/m3t/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/m3t/</guid><description>本篇文章主要是我个人对M3T这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;我对M3T的看法&lt;/h1&gt;
+&lt;h3&gt;概述&lt;/h3&gt;
+&lt;h4&gt;核心内容&lt;/h4&gt;
+&lt;p&gt;传统MT系统主要处理句子级文本，忽略文档的整体上下文和布局（如PDF中的多列、表格、标题），这会导致OCR错误或翻译质量下降。M3T数据集旨在解决这个问题，测试模型能否利用视觉线索（如布局信息）来改善翻译，尤其是对复杂PDF文档。&lt;/p&gt;
+&lt;h4&gt;数据集详情&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;来源&lt;/strong&gt;：从EUR-Lex（法律文档）、DocLayNet（带布局注解的文档）和RVL-CDIP（扫描文档）采集数据，覆盖de、es、fr、zh和en语言对，领域包括法律、金融、专利等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;内容&lt;/strong&gt;：包含各种布局元素（如文本块、标题、表格），通过专业注解标注边界框和阅读顺序。翻译由专业人士基于上下文完成，长度控制在源文本±10%内。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;统计&lt;/strong&gt;：文本块和表格单元最多，语言对以en→zh最多（259对），其他均衡。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;补充&lt;/strong&gt;：提供自动注解的EUR-Lex数据，供社区研究。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;实验部分&lt;/h4&gt;
+&lt;p&gt;使用LLaVa-v1.5模型（结合CLIP视觉编码器和Vicuna-13B）测试视觉特征对翻译的影响：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;方法&lt;/strong&gt;：输入OCR文本或金标准文本，加入随机图像、文本块图像或整文档图像，评估用doc-COMET分数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结果&lt;/strong&gt;：视觉特征改善了OCR文本翻译（尤其在中文上提升0.02），文档图像效果最好，但整体提升有限（0.01-0.02），短段或表格翻译易出错。en→其他语言时模型表现不佳。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：多模态模型有潜力，但文档翻译仍需改进。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;局限性&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;数据偏向高资源语言和法律/金融领域，可能有偏见。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;M3T 数据集介绍&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;数据来源&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;EUR-Lex&lt;/strong&gt;：欧盟法律文档，由专业翻译员翻译，支持多语言，保留布局。采样复杂布局文档（如包含表格、脚注）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DocLayNet&lt;/strong&gt;：带布局注解的文档，采样包括平面、多列、图像和表格。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RVL-CDIP&lt;/strong&gt;：扫描文档，随机采样排除简单类型如传真封面。
+采样策略强调覆盖多种布局元素，使用 Faster R-CNN（基于 detectron2）自动标签辅助（平均 F1 分数 73.4）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;补充数据&lt;/strong&gt;：提供自动注解的 EUR-Lex 文档，用于未来研究（如模型训练）。这些数据从 JRC-Acquis 平行语料提取，使用 Tesseract OCR 提取文本，并对齐成 &amp;lt;source-text, OCR’d-text, bounding-box, target-text&amp;gt; 元组。&lt;/p&gt;
+&lt;h3&gt;标注内容&lt;/h3&gt;
+&lt;p&gt;注解分为两个阶段，由专业注解员完成：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;布局注解&lt;/strong&gt;：提取文本，并标注边界框（bounding boxes，非重叠矩形）和标签。标签扩展自 DocLayNet ontology，包括：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Text&lt;/strong&gt;：常规文本段落或逻辑分组的文本块。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Section-header&lt;/strong&gt;：文档部分标题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Page-footer&lt;/strong&gt;：页脚重复元素（如页码）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vertical&lt;/strong&gt;：垂直方向文本。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Table-cell&lt;/strong&gt;：表格单元文本。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Table&lt;/strong&gt;：表格结构。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Page-header&lt;/strong&gt;：页眉重复元素。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Picture&lt;/strong&gt;：图形或照片。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;List-item&lt;/strong&gt;：列表项（悬挂形状）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Formula&lt;/strong&gt;：独立数学或化学公式。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Footnote&lt;/strong&gt;：脚注。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code&lt;/strong&gt;：代码块。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Title&lt;/strong&gt;：文档整体标题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Caption&lt;/strong&gt;：图片或表格的描述文本。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Order&lt;/strong&gt;：阅读顺序（欧洲语言一般左到右、上到下；表格为单元格左到右、上到下）。
+这些标签帮助模型理解逻辑分区和上下文。注解质量控制：随机审查 10%，若错误 &amp;gt;5% 则重注。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;翻译注解&lt;/strong&gt;：基于原始文档上下文翻译提取文本。使用商业 MT 系统预翻译，然后专业翻译员 post-edit，确保翻译长度在源文本 ±10% 内（便于评估布局保持）。质量控制类似布局注解。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;数据格式：类似COCO&lt;/h3&gt;
+&lt;p&gt;格式基于扩展 DocLayNet ontology，且使用边界框注解（坐标 + 标签），它类似于 COCO 格式（JSON 文件包含图像元数据、边界框和类别标签）。DocLayNet 本身使用 COCO 风格的 JSON 注解，用于文档布局分割任务，因此 M3T 很可能采用类似结构：每个文档有图像（PDF 页）、注解列表（bbox [x, y, width, height]、category_id、阅读顺序）。补充数据是元组格式，便于对齐 OCR 和平行文本。没有提及其他格式如 YOLO 或 其他格式。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;我认为，M3T注重于文档翻译的前后阅读顺序的一致性，不太关注&lt;/p&gt;
+&lt;p&gt;翻译的质量，与TransBench互补。或许两个标准结合可以形成在机器翻译的工业级应用领域的全新的，全面的标准。&lt;/p&gt;
 </content:encoded></item><item><title>TransBench论文解读</title><link>https://paradoxmoranis.github.io/posts/transbench/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/transbench/</guid><description>本篇文章主要是我个人对阿里巴巴和北京语言大学关于机器翻译MT在工业级领域的应用提出的新标准TransBench的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;TransBench&lt;/h1&gt;
 &lt;h2&gt;概述&lt;/h2&gt;
 &lt;p&gt;TransBench通过三个方面评估机器翻译在工业级翻译的表现：&lt;/p&gt;
@@ -165,81 +349,6 @@ TransBench提供了翻译评估的结构化框架，公开的电商翻译基准�
 &lt;/ul&gt;
 &lt;h2&gt;总结&lt;/h2&gt;
 &lt;p&gt;从我的个人观点看来TransBench根据自己提出的多层次评估指标，将传统的工业级机器翻译MT指标和标准分别应用到各个层次，形成一套新的标准。其数据集也是根据不同的层次有不同的标注方法。&lt;/p&gt;
-</content:encoded></item><item><title>M3T论文解读</title><link>https://paradoxmoranis.github.io/posts/m3t/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/m3t/</guid><description>本篇文章主要是我个人对M3T这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;我对M3T的看法&lt;/h1&gt;
-&lt;h3&gt;概述&lt;/h3&gt;
-&lt;h4&gt;核心内容&lt;/h4&gt;
-&lt;p&gt;传统MT系统主要处理句子级文本，忽略文档的整体上下文和布局（如PDF中的多列、表格、标题），这会导致OCR错误或翻译质量下降。M3T数据集旨在解决这个问题，测试模型能否利用视觉线索（如布局信息）来改善翻译，尤其是对复杂PDF文档。&lt;/p&gt;
-&lt;h4&gt;数据集详情&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;来源&lt;/strong&gt;：从EUR-Lex（法律文档）、DocLayNet（带布局注解的文档）和RVL-CDIP（扫描文档）采集数据，覆盖de、es、fr、zh和en语言对，领域包括法律、金融、专利等。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;内容&lt;/strong&gt;：包含各种布局元素（如文本块、标题、表格），通过专业注解标注边界框和阅读顺序。翻译由专业人士基于上下文完成，长度控制在源文本±10%内。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;统计&lt;/strong&gt;：文本块和表格单元最多，语言对以en→zh最多（259对），其他均衡。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;补充&lt;/strong&gt;：提供自动注解的EUR-Lex数据，供社区研究。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;实验部分&lt;/h4&gt;
-&lt;p&gt;使用LLaVa-v1.5模型（结合CLIP视觉编码器和Vicuna-13B）测试视觉特征对翻译的影响：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;方法&lt;/strong&gt;：输入OCR文本或金标准文本，加入随机图像、文本块图像或整文档图像，评估用doc-COMET分数。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;结果&lt;/strong&gt;：视觉特征改善了OCR文本翻译（尤其在中文上提升0.02），文档图像效果最好，但整体提升有限（0.01-0.02），短段或表格翻译易出错。en→其他语言时模型表现不佳。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：多模态模型有潜力，但文档翻译仍需改进。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;局限性&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;数据偏向高资源语言和法律/金融领域，可能有偏见。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;M3T 数据集介绍&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;数据来源&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;EUR-Lex&lt;/strong&gt;：欧盟法律文档，由专业翻译员翻译，支持多语言，保留布局。采样复杂布局文档（如包含表格、脚注）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;DocLayNet&lt;/strong&gt;：带布局注解的文档，采样包括平面、多列、图像和表格。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;RVL-CDIP&lt;/strong&gt;：扫描文档，随机采样排除简单类型如传真封面。
-采样策略强调覆盖多种布局元素，使用 Faster R-CNN（基于 detectron2）自动标签辅助（平均 F1 分数 73.4）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;补充数据&lt;/strong&gt;：提供自动注解的 EUR-Lex 文档，用于未来研究（如模型训练）。这些数据从 JRC-Acquis 平行语料提取，使用 Tesseract OCR 提取文本，并对齐成 &amp;lt;source-text, OCR’d-text, bounding-box, target-text&amp;gt; 元组。&lt;/p&gt;
-&lt;h3&gt;标注内容&lt;/h3&gt;
-&lt;p&gt;注解分为两个阶段，由专业注解员完成：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;布局注解&lt;/strong&gt;：提取文本，并标注边界框（bounding boxes，非重叠矩形）和标签。标签扩展自 DocLayNet ontology，包括：&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Text&lt;/strong&gt;：常规文本段落或逻辑分组的文本块。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Section-header&lt;/strong&gt;：文档部分标题。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Page-footer&lt;/strong&gt;：页脚重复元素（如页码）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Vertical&lt;/strong&gt;：垂直方向文本。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Table-cell&lt;/strong&gt;：表格单元文本。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Table&lt;/strong&gt;：表格结构。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Page-header&lt;/strong&gt;：页眉重复元素。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Picture&lt;/strong&gt;：图形或照片。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;List-item&lt;/strong&gt;：列表项（悬挂形状）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Formula&lt;/strong&gt;：独立数学或化学公式。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Footnote&lt;/strong&gt;：脚注。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Code&lt;/strong&gt;：代码块。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Title&lt;/strong&gt;：文档整体标题。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Caption&lt;/strong&gt;：图片或表格的描述文本。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Order&lt;/strong&gt;：阅读顺序（欧洲语言一般左到右、上到下；表格为单元格左到右、上到下）。
-这些标签帮助模型理解逻辑分区和上下文。注解质量控制：随机审查 10%，若错误 &amp;gt;5% 则重注。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;翻译注解&lt;/strong&gt;：基于原始文档上下文翻译提取文本。使用商业 MT 系统预翻译，然后专业翻译员 post-edit，确保翻译长度在源文本 ±10% 内（便于评估布局保持）。质量控制类似布局注解。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;数据格式：类似COCO&lt;/h3&gt;
-&lt;p&gt;格式基于扩展 DocLayNet ontology，且使用边界框注解（坐标 + 标签），它类似于 COCO 格式（JSON 文件包含图像元数据、边界框和类别标签）。DocLayNet 本身使用 COCO 风格的 JSON 注解，用于文档布局分割任务，因此 M3T 很可能采用类似结构：每个文档有图像（PDF 页）、注解列表（bbox [x, y, width, height]、category_id、阅读顺序）。补充数据是元组格式，便于对齐 OCR 和平行文本。没有提及其他格式如 YOLO 或 其他格式。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;我认为，M3T注重于文档翻译的前后阅读顺序的一致性，不太关注&lt;/p&gt;
-&lt;p&gt;翻译的质量，与TransBench互补。或许两个标准结合可以形成在机器翻译的工业级应用领域的全新的，全面的标准。&lt;/p&gt;
-</content:encoded></item><item><title>FRMT论文解读</title><link>https://paradoxmoranis.github.io/posts/frmt/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/frmt/</guid><description>本篇文章主要是我个人对FRMT这个文档机器翻译新的评估标准的看法。仅代表个人观点。</description><pubDate>Tue, 16 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;FRMT阅读总结&lt;/h1&gt;
-&lt;h2&gt;论文主要内容&lt;/h2&gt;
-&lt;p&gt;传统MT系统往往偏向网络上数据量大的“多数派”变体（如巴西葡萄牙语），忽略少数派变体，导致用户体验差。论文提出FRMT数据集作为基准，测试模型在few-shot设置下的适应能力（图1展示用exemplars控制输出，如bus翻译为ônibus或autocarro）。贡献包括：(1) 构建FRMT数据集；(2) 评估自动指标和人类评测的相关性；(3) 提供基线模型；(4) 给出训练、评估和比较模型的指南。论文强调few-shot方法能推广到其他风格或区域，而不需大量标注数据。
-相关工作部分回顾了风格转移（style transfer）和变体针对MT（如区域、礼貌级），但多数需大量标注数据。FRMT强调few-shot，数据集设计针对区域差异，并包括潜在干扰项。&lt;/p&gt;
-&lt;h2&gt;数据集&lt;/h2&gt;
-&lt;p&gt;FRMT的数据集被分为三个“桶”，也就是三个类别或者说是子集。每个类别用于针对不同类型的挑战和问题。
-FRMT总数据分成：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Lexical桶（词汇桶）：焦点是区域特定词汇。收集了像“bus”这样的词（巴西译“ônibus”，葡萄牙译“autocarro”），从Wikipedia相关页面取句子。目的是考模型能不能根据exemplar，正确用区域专有词，而不是混用。&lt;/li&gt;
-&lt;li&gt;Entity桶（实体桶）：焦点是区域关联实体，如地名（里斯本 vs. 圣保罗）。句子从这些实体的Wikipedia页面取。目的是加“干扰项”（distractors），考模型别被预训练偏见骗了（比如模型默认偏巴西，就错译葡萄牙实体）。&lt;/li&gt;
-&lt;li&gt;Random桶（随机桶）：自然随机采样Wikipedia好文章的句子，没特定主题。目的是模拟日常翻译，考整体表现。同一源句有所有区域的翻译参考。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;每个桶再分exemplar（提示用，少量）、dev（调参用）和test（最终测用）。总共几千句，分桶让评估更精准：比如lexical桶测词汇准确，entity测抗干扰。M3T也类似，分来源（如EUR-Lex桶），但焦点是布局而非区域。&lt;/p&gt;
 </content:encoded></item><item><title>qETRC在ArchLinxu的构建</title><link>https://paradoxmoranis.github.io/posts/qetrc/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/qetrc/</guid><description>本篇文章主要讲解如何在ArchLinux上构建qETRC。其他操作系统请自行搜索。</description><pubDate>Sat, 13 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;qETRC在ArchLinxu的构建方法&lt;/h1&gt;
 &lt;h2&gt;安装第三方库&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo pacman -S base-devel cmake qt6-base qt6-tools qt6-declarative qt6-quickcontrols2 qt6-svg qt6-webengine qt6-webchannel qt6-webview qt6-websockets qt6-x11extras SARibbon
@@ -418,7 +527,7 @@ sudo modprobe v4l2loopback
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;ArchWiki&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
+</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解Paru和Pacman的用法。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
 &lt;h2&gt;一、pacman 用法&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pacman&lt;/code&gt;（Package Manager）是 Arch Linux 的核心包管理工具，用于安装、更新、删除和管理官方仓库中的软件包。它的命令通常需要以 &lt;code&gt;sudo&lt;/code&gt; 运行，因为包管理涉及系统级操作。&lt;/p&gt;
 &lt;h3&gt;1. 基本命令格式&lt;/h3&gt;
