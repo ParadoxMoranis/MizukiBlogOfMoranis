@@ -1,4 +1,204 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>开发过程中常用的软件和我平时使用的软件</title><link>https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</guid><description>本篇文章主要讲解开发过程中常用的软件和我平时使用的软件。</description><pubDate>Fri, 17 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;常用开发以及实用的日常软件&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>LazyVim安装与初步配置</title><link>https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</guid><description>本篇文章主要讲解LazyVim的安装与配置，以及一些基本配置和功能。</description><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Lazyvim安装与初步配置&lt;/h1&gt;
+&lt;h3&gt;1. 安装 LazyVim&lt;/h3&gt;
+&lt;p&gt;确保已经安装了 Neovim。然后按照以下步骤安装 LazyVim：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 备份现有的 Neovim 配置（如果有）
+mv ~/.config/nvim ~/.config/nvim.bak
+mv ~/.local/share/nvim ~/.local/share/nvim.bak
+
+# 克隆 LazyVim 启动模板
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启动 Neovim，LazyVim 会自动安装插件管理器和默认插件。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3&gt;2. 配置 LazyVim&lt;/h3&gt;
+&lt;p&gt;LazyVim 的配置文件位于 &lt;code&gt;~/.config/nvim/lua/config/&lt;/code&gt; 和 &lt;code&gt;~/.config/nvim/lua/plugins/&lt;/code&gt;。需要修改以下文件：（没有则创建）&lt;/p&gt;
+&lt;h4&gt;2.1 基本配置 (&lt;code&gt;lua/config/options.lua&lt;/code&gt;)&lt;/h4&gt;
+&lt;p&gt;确保启用语法高亮和一些基本设置。编辑 &lt;code&gt;lua/config/options.lua&lt;/code&gt;，添加或确认以下内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim.opt.syntax = &quot;on&quot; -- 启用语法高亮
+vim.opt.number = true -- 显示行号
+vim.opt.relativenumber = true -- 相对行号
+vim.opt.tabstop = 2 -- Tab 宽度
+vim.opt.shiftwidth = 2 -- 缩进宽度
+vim.opt.expandtab = true -- Tab 转空格
+vim.opt.smartindent = true -- 智能缩进
+vim.opt.termguicolors = true -- 启用真彩色（好看主题需要）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;2.2 代码提示和检查（LSP 配置）&lt;/h4&gt;
+&lt;p&gt;通过 &lt;code&gt;nvim-lspconfig&lt;/code&gt; 和 &lt;code&gt;mason.nvim&lt;/code&gt; 提供代码提示和检查功能。需要安装语言服务器并配置插件。&lt;/p&gt;
+&lt;p&gt;编辑 &lt;code&gt;lua/plugins/lsp.lua&lt;/code&gt;，添加以下内容（或在默认配置基础上扩展）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return {
+  {
+    &quot;neovim/nvim-lspconfig&quot;,
+    config = function()
+      local lspconfig = require(&quot;lspconfig&quot;)
+      -- 示例：配置 Python 和 JavaScript 的 LSP
+      lspconfig.pyright.setup {} -- Python
+      lspconfig.tsserver.setup {} -- JavaScript/TypeScript
+      lspconfig.lua_ls.setup {} -- Lua
+    end,
+  },
+  {
+    &quot;williamboman/mason.nvim&quot;,
+    opts = {
+      ensure_installed = {
+        &quot;pyright&quot;, -- Python LSP
+        &quot;tsserver&quot;, -- JavaScript/TypeScript LSP
+        &quot;lua_ls&quot;, -- Lua LSP
+        -- 根据需要添加其他语言的 LSP
+      },
+    },
+  },
+  {
+    &quot;hrsh7th/nvim-cmp&quot;,
+    dependencies = {
+      &quot;hrsh7th/cmp-nvim-lsp&quot;,
+      &quot;hrsh7th/cmp-buffer&quot;,
+      &quot;hrsh7th/cmp-path&quot;,
+      &quot;L3MON4D3/LuaSnip&quot;,
+    },
+    config = function()
+      local cmp = require(&quot;cmp&quot;)
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require(&quot;luasnip&quot;).lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          [&quot;&amp;lt;C-b&amp;gt;&quot;] = cmp.mapping.scroll_docs(-4),
+          [&quot;&amp;lt;C-f&amp;gt;&quot;] = cmp.mapping.scroll_docs(4),
+          [&quot;&amp;lt;C-Space&amp;gt;&quot;] = cmp.mapping.complete(),
+          [&quot;&amp;lt;C-e&amp;gt;&quot;] = cmp.mapping.abort(),
+          [&quot;&amp;lt;CR&amp;gt;&quot;] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = &quot;nvim_lsp&quot; },
+          { name = &quot;luasnip&quot; },
+          { name = &quot;buffer&quot; },
+          { name = &quot;path&quot; },
+        }),
+      })
+    end,
+  },
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启动 Neovim，Mason 会自动安装配置的语言服务器。代码提示通过 &lt;code&gt;nvim-cmp&lt;/code&gt; 实现，支持自动补全、函数签名等。&lt;/p&gt;
+&lt;h4&gt;2.3 语法高亮&lt;/h4&gt;
+&lt;p&gt;编辑 &lt;code&gt;lua/plugins/treesitter.lua&lt;/code&gt;，确保安装所需的语言解析器：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return {
+  {
+    &quot;nvim-treesitter/nvim-treesitter&quot;,
+    build = &quot;:TSUpdate&quot;,
+    config = function()
+      require(&quot;nvim-treesitter.configs&quot;).setup({
+        ensure_installed = {
+          &quot;python&quot;,
+          &quot;javascript&quot;,
+          &quot;typescript&quot;,
+          &quot;lua&quot;,
+          &quot;html&quot;,
+          &quot;css&quot;,
+          &quot;json&quot;,
+          &quot;markdown&quot;,
+          -- 根据需要添加其他语言
+        },
+        highlight = { enable = true }, -- 启用语法高亮
+        indent = { enable = true }, -- 启用自动缩进
+      })
+    end,
+  },
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;运行 &lt;code&gt;:TSUpdate&lt;/code&gt; 确保 Treesitter 解析器是最新的。&lt;/p&gt;
+&lt;h4&gt;2.4 好看的主题&lt;/h4&gt;
+&lt;p&gt;LazyVim 默认提供多种主题，可以选择一个好看的主题。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return {
+  {
+    &quot;catppuccin/nvim&quot;,
+    name = &quot;catppuccin&quot;,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme catppuccin]])
+    end,
+  },
+  -- 可选：其他主题
+  -- { &quot;folke/tokyonight.nvim&quot;, config = function() vim.cmd([[colorscheme to 😂kyonight]]) end },
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;推荐主题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Catppuccin&lt;/strong&gt;：柔和、现代化，支持多种风格（latte、frappe、macchiato、mocha）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TokyoNight&lt;/strong&gt;：深色主题，科技感强。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dracula&lt;/strong&gt;：经典暗色主题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;安装后，使用 &lt;code&gt;:colorscheme catppuccin&lt;/code&gt; 切换主题。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3&gt;3. 额外推荐插件&lt;/h3&gt;
+&lt;p&gt;为了增强体验，可以添加以下插件到 &lt;code&gt;lua/plugins/extra.lua&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return {
+  -- 文件浏览器
+  {
+    &quot;nvim-neo-tree/neo-tree.nvim&quot;,
+    branch = &quot;v3.x&quot;,
+    dependencies = {
+      &quot;nvim-lua/plenary.nvim&quot;,
+      &quot;nvim-tree/nvim-web-devicons&quot;,
+      &quot;MunifTanjim/nui.nvim&quot;,
+    },
+    config = function()
+      require(&quot;neo-tree&quot;).setup()
+    end,
+  },
+  -- 状态栏美化
+  {
+    &quot;nvim-lualine/lualine.nvim&quot;,
+    config = function()
+      require(&quot;lualine&quot;).setup({
+        options = { theme = &quot;catppuccin&quot; }, -- 与主题匹配
+      })
+    end,
+  },
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h3&gt;4. 同步插件&lt;/h3&gt;
+&lt;p&gt;保存所有配置文件后，启动 Neovim，运行以下命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:Lazy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这会打开 Lazy.nvim 插件管理器，自动安装和同步所有插件。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3&gt;5. 测试与使用&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;代码提示&lt;/strong&gt;：在支持的语言文件中输入代码，按 &lt;code&gt;&amp;lt;C-Space&amp;gt;&lt;/code&gt; 触发补全。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;代码检查&lt;/strong&gt;：LSP 会自动检测错误并显示诊断信息（悬浮提示用 &lt;code&gt;K&lt;/code&gt; 键）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;语法高亮&lt;/strong&gt;：Treesitter 确保代码高亮准确且美观。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;主题&lt;/strong&gt;：通过 &lt;code&gt;:colorscheme&lt;/code&gt; 命令切换主题，或在配置文件中固定。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h3&gt;6. 常见问题&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LSP 不工作？&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;确保 Mason 安装了正确的语言服务器（&lt;code&gt;:Mason&lt;/code&gt; 查看）。&lt;/li&gt;
+&lt;li&gt;检查网络连接，部分语言服务器需要下载。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;主题不好看？&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;确保终端支持真彩色（&lt;code&gt;echo $TERM&lt;/code&gt; 应为 &lt;code&gt;xterm-256color&lt;/code&gt; 或类似）。&lt;/li&gt;
+&lt;li&gt;尝试其他主题，如 &lt;code&gt;tokyonight&lt;/code&gt; 或 &lt;code&gt;dracula&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h3&gt;7. 扩展阅读&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;LazyVim 官方文档：https://www.lazyvim.org/&lt;/li&gt;
+&lt;li&gt;Neovim LSP 配置：https://github.com/neovim/nvim-lspconfig&lt;/li&gt;
+&lt;li&gt;Treesitter 插件：https://github.com/nvim-treesitter/nvim-treesitter&lt;/li&gt;
+&lt;li&gt;Catppuccin 主题：https://github.com/catppuccin/nvim&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded></item><item><title>开发过程中常用的软件和我平时使用的软件</title><link>https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</guid><description>本篇文章主要讲解开发过程中常用的软件和我平时使用的软件。</description><pubDate>Fri, 17 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;常用开发以及实用的日常软件&lt;/h1&gt;
 &lt;h2&gt;开发相关软件&lt;/h2&gt;
 &lt;h3&gt;1.VSCode（注意与VS2022等区分）：万能轻量编辑器&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code 官网&lt;/a&gt;&lt;/p&gt;
