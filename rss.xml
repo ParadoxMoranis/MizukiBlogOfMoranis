@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>LazyVim安装与初步配置</title><link>https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</guid><description>本篇文章主要讲解LazyVim的安装与配置，以及一些基本配置和功能。</description><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Lazyvim安装与初步配置&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>我的StarList</title><link>https://paradoxmoranis.github.io/posts/starlist/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/starlist/</guid><description>本篇文章主要是我个人Star/推荐 的 项目/工具</description><pubDate>Fri, 21 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Github开源项目&lt;/h1&gt;
+&lt;h2&gt;1.PDFMathTranslate:开源的论文翻译项目&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;PDFMathTranslate/PDFMathTranslate&quot;}&lt;/p&gt;
+&lt;h2&gt;2.FlowLauncher：Windows平台的应用启动器&amp;amp;文件查找工具&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;Flow-Launcher/Flow.Launcher&quot;}&lt;/p&gt;
+&lt;h2&gt;3.hello-algo：用动画入门数据结构与算法&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;krahets/hello-algo&quot;}&lt;/p&gt;
+&lt;h2&gt;4.Marktext：轻量级开源Markdown编辑器&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;marktext/marktext&quot;}&lt;/p&gt;
+&lt;h2&gt;5.Microsoft-Activation-Scripts：开源Windows激活工具，还提供365和系统镜像的下载&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;massgravel/Microsoft-Activation-Scripts&quot;}&lt;/p&gt;
+&lt;h2&gt;6.build-your-own-x：多领域的底层代码教学，教你手搓车轮子&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;codecrafters-io/build-your-own-x&quot;}&lt;/p&gt;
+&lt;h2&gt;7.introduction-to-git-and-github-ebook：Git与Github教程电子书&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;bobbyiliev/introduction-to-git-and-github-ebook&quot;}&lt;/p&gt;
+&lt;h2&gt;8.learn_python3_spider：python3爬虫教学&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;wistbean/learn_python3_spider&quot;}&lt;/p&gt;
+&lt;h2&gt;9.Web-Dev-For-Beginners：微软官方的前端入门教程&lt;/h2&gt;
+&lt;p&gt;::github{repo=&quot;microsoft/Web-Dev-For-Beginners&quot;}&lt;/p&gt;
+</content:encoded></item><item><title>LazyVim安装与初步配置</title><link>https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</guid><description>本篇文章主要讲解LazyVim的安装与配置，以及一些基本配置和功能。</description><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Lazyvim安装与初步配置&lt;/h1&gt;
 &lt;h3&gt;1. 安装 LazyVim&lt;/h3&gt;
 &lt;p&gt;确保已经安装了 Neovim。然后按照以下步骤安装 LazyVim：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# 备份现有的 Neovim 配置（如果有）
