@@ -2,7 +2,7 @@
 title: Arch-paru和pacman用法详解
 published: 2025-09-11
 pinned: false
-description: 本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。
+description: 本篇文章主要讲解Paru和Pacman的用法。
 tags: [ArchLinux, Wayland, Aur ,pacman, paru]
 category: Usage Of Arch Linux
 author: MoranisZ
