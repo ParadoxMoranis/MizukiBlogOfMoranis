@@ -8,7 +8,7 @@ category: Usage Of AI
 author: MoranisZ
 draft: false
 date: 2025-12-05
-image: '/image/claude.jpg'
+image: ''
 ---
 
 # 摘要 
