@@ -237,7 +237,7 @@ export const profileConfig: ProfileConfig = {
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/ParadoxMoranis",
-		}
+		},
 	],
 	// Umami统计部份，记得在layout插入Umami的head标签
 	umami: {

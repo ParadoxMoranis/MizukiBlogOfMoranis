@@ -10,13 +10,13 @@ import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@utils/content-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
+import bcryptjs from "bcryptjs";
+import CryptoJS from "crypto-js";
 import { licenseConfig } from "src/config";
 import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
-import CryptoJS from "crypto-js";
-import bcryptjs from "bcryptjs";
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
 	return blogEntries.map((entry) => ({
@@ -31,18 +31,21 @@ const { Content, headings } = await entry.render();
 const { remarkPluginFrontmatter } = await entry.render();
 
 // 处理加密逻辑
-let encryptedContent = '';
-let passwordHash = '';
+let encryptedContent = "";
+let passwordHash = "";
 let isEncrypted = entry.data.encrypted && entry.data.password;
 
 if (isEncrypted) {
 	// 对于加密文章，我们将使用markdown内容进行加密
 	// 在客户端解密后，会通过JavaScript重新渲染markdown
 	const contentToEncrypt = entry.body;
-	
+
 	// 使用AES加密内容
-	encryptedContent = CryptoJS.AES.encrypt(contentToEncrypt, entry.data.password).toString();
-	
+	encryptedContent = CryptoJS.AES.encrypt(
+		contentToEncrypt,
+		entry.data.password,
+	).toString();
+
 	// 生成密码哈希
 	const saltRounds = 10;
 	passwordHash = bcryptjs.hashSync(entry.data.password, saltRounds);

@@ -90,7 +90,7 @@ const localPlaylist = [
 		url: "assets/music/url/不要说话.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 4,
 		title: "程艾影",
 		artist: "赵雷",
@@ -98,7 +98,7 @@ const localPlaylist = [
 		url: "assets/music/url/程艾影.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 5,
 		title: "朵",
 		artist: "赵雷",
@@ -106,7 +106,7 @@ const localPlaylist = [
 		url: "assets/music/url/朵.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 6,
 		title: "房间",
 		artist: "刘瑞琦",
@@ -114,7 +114,7 @@ const localPlaylist = [
 		url: "assets/music/url/房间.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 7,
 		title: "富士山下",
 		artist: "陈奕迅",
@@ -122,7 +122,7 @@ const localPlaylist = [
 		url: "assets/music/url/富士山下.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 8,
 		title: "孤独患者",
 		artist: "陈奕迅",
@@ -130,23 +130,23 @@ const localPlaylist = [
 		url: "assets/music/url/孤独患者.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 9,
 		title: "怪咖",
 		artist: "薛之谦",
 		cover: "assets/music/cover/怪咖.png",
-        url: "assets/music/url/怪咖.mp3",
+		url: "assets/music/url/怪咖.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 10,
-		title: "南方姑娘",  
+		title: "南方姑娘",
 		artist: "赵雷",
 		cover: "assets/music/cover/南方姑娘.jpg",
 		url: "assets/music/url/南方姑娘.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 11,
 		title: "十面埋伏",
 		artist: "陈奕迅",
@@ -154,7 +154,7 @@ const localPlaylist = [
 		url: "assets/music/url/十面埋伏.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 12,
 		title: "我只能离开",
 		artist: "颜人中",
@@ -162,7 +162,7 @@ const localPlaylist = [
 		url: "assets/music/url/我只能离开.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 13,
 		title: "下一个天亮",
 		artist: "郭静",
@@ -170,7 +170,7 @@ const localPlaylist = [
 		url: "assets/music/url/下一个天亮.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 14,
 		title: "像风一样",
 		artist: "薛之谦",
@@ -178,15 +178,15 @@ const localPlaylist = [
 		url: "assets/music/url/像风一样.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 15,
 		title: "最初的记忆",
 		artist: "徐佳莹",
 		cover: "assets/music/cover/最初的记忆.jpg",
-        url: "assets/music/url/最初的记忆.mp3",
+		url: "assets/music/url/最初的记忆.mp3",
 		duration: 200,
-    },
-    {
+	},
+	{
 		id: 16,
 		title: "CruelSummer",
 		artist: "Talor Swift",
@@ -194,7 +194,7 @@ const localPlaylist = [
 		url: "assets/music/url/CruelSummer.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 17,
 		title: "exile",
 		artist: "Talor Swift",
@@ -202,7 +202,7 @@ const localPlaylist = [
 		url: "assets/music/url/exile.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 18,
 		title: "OneLastKiss",
 		artist: "宇多田ヒカル",
@@ -210,15 +210,14 @@ const localPlaylist = [
 		url: "assets/music/url/OneLastKiss.mp3",
 		duration: 200,
 	},
-    {
+	{
 		id: 19,
 		title: "WhoSays",
 		artist: "Selena Gomez",
 		cover: "assets/music/cover/WhoSays.jpg",
 		url: "assets/music/url/WhoSays.mp3",
 		duration: 200,
-	}
-
+	},
 ];
 
 async function fetchMetingPlaylist() {
@@ -481,7 +480,6 @@ onMount(() => {
 		}
 	}
 });
-
 
 onDestroy(() => {
 	if (audio) {
