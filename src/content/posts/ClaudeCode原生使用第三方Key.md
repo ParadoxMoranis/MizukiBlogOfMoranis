@@ -2,7 +2,7 @@
 title: ClaudeCode使用西风API
 published: 2025-12-05
 pinned: false
-description: 本篇文章主要讲解如何使用原生ClaudeCode配合西风API。
+description: 本篇文章主要讲解如何使用原生ClaudeCode配合第三方API。
 tags: [NodeJS, CLI, Linux，Claude]
 category: Usage Of AI
 author: MoranisZ
@@ -12,7 +12,7 @@ image: ''
 ---
 
 # 摘要 
-ClaudeCode作为CLI的工具，不仅可以写代码，还能执行命令做很多其他的事情。但是官方API不仅贵还锁国区。所以优质的第三方API是很多人的选择。本文介绍如何使用原生ClaudeCode+CCSwitch跳过A社登陆使用西风API。
+ClaudeCode作为CLI的工具，不仅可以写代码，还能执行命令做很多其他的事情。但是官方API不仅贵还锁国区。所以优质的第三方API是很多人的选择。本文介绍如何使用原生ClaudeCode+CCSwitch跳过A社登陆使用第三方API。
 > 我的实验环境是ArchLinux,其他操作系统暂未尝试，如有错误请指正。
 ## 环境准备
 Nodejs

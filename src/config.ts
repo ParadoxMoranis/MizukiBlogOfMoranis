@@ -1,4 +1,3 @@
-import { factory } from "typescript";
 import type {
 	AnnouncementConfig,
 	CommentConfig,
@@ -82,20 +81,20 @@ export const siteConfig: SiteConfig = {
 
 		homeText: {
 			enable: true, // 在主页显示自定义文本
-			title: "Moranis Love you!", // 主页横幅主标题
+			title: "MoranisZ Blog", // 主页横幅主标题
 
 			subtitle: [
-				"I'm Moranis ,a university student!",
-				"I like coding and Arch Linux!",
-				"Connect with me by email: paradoxybcrush@gmail.com",
-				"View my projects on GitHub and star them!",
+				"水无定，花有尽，会相逢。可是人生常在别离中",
+				"可是困住我青春的人，始终没有回头看我一眼",
+				"有一天我不再寻求幸福的秘诀，我只希望遇到一个和我一样心软的人",
+				"也许从一开始一切就都是错的",
 			],
 			typewriter: {
 				enable: true, // 启用副标题打字机效果
 
 				speed: 100, // 打字速度（毫秒）
 				deleteSpeed: 50, // 删除速度（毫秒）
-				pauseTime: 2000, // 完全显示后的暂停时间（毫秒）
+				pauseTime: 3000, // 完全显示后的暂停时间（毫秒）
 			},
 		},
 
