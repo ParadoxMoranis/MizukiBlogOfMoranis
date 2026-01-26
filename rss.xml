@@ -104,6 +104,109 @@ Linux终端命令提示器
 &lt;/ul&gt;
 &lt;h2&gt;最后&lt;/h2&gt;
 &lt;p&gt;暂时就这些。&lt;/p&gt;
+</content:encoded></item><item><title>ClaudeCode使用西风API</title><link>https://paradoxmoranis.github.io/posts/claudecode%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9key/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/claudecode%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9key/</guid><description>本篇文章主要讲解如何使用原生ClaudeCode配合第三方API。</description><pubDate>Fri, 05 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;摘要&lt;/h1&gt;
+&lt;p&gt;ClaudeCode作为CLI的工具，不仅可以写代码，还能执行命令做很多其他的事情。但是官方API不仅贵还锁国区。所以优质的第三方API是很多人的选择。本文介绍如何使用原生ClaudeCode+CCSwitch跳过A社登陆使用第三方API。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我的实验环境是ArchLinux,其他操作系统暂未尝试，如有错误请指正。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;环境准备&lt;/h2&gt;
+&lt;p&gt;Nodejs
+代理：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;设置 HTTP/HTTPS 流量走代理
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
+export all_proxy=socks5://127.0.0.1:7890&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;【关键】防止代理拦截本地回环
+export no_proxy=&quot;localhost,127.0.0.1,::1&quot;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Key：&lt;a href=&quot;www.openclaudecode.cn&quot;&gt;OpenClaudeCode&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;安装ClaudeCode&lt;/h2&gt;
+&lt;p&gt;安装命令行工具 (可能需要 sudo，取决于你的 npm 配置)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g @anthropic-ai/claude-code
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装CCSwitch&lt;/h2&gt;
+&lt;p&gt;安装命令行工具 (可能需要 sudo，取决于你的 npm 配置)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g @songhe/cc-switch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;配置CCSwitch&lt;/h2&gt;
+&lt;p&gt;它的核心作用是：&lt;strong&gt;“欺骗”官方的 Claude CLI，让它接受你的第三方 Key 和中转地址。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它通过修改 Claude Code 的隐藏配置文件 (&lt;code&gt;~/.claude/settings.json&lt;/code&gt;)，强行把官方 API 地址替换成你的中转商地址。&lt;/p&gt;
+&lt;p&gt;以下是安装和使用步骤（经过实验Arch Linux 可直接运行）：&lt;/p&gt;
+&lt;h3&gt;2。 添加你的第三方 Key 配置&lt;/h3&gt;
+&lt;p&gt;安装完成后，使用 &lt;code&gt;ccs&lt;/code&gt; 命令来添加你的中转商信息。&lt;/p&gt;
+&lt;p&gt;语法格式：
+&lt;code&gt;ccs add &amp;lt;自定义名字&amp;gt; &amp;lt;中转API地址&amp;gt; &amp;lt;你的Key&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;（假设你的中转商地址是 &lt;code&gt;https://api.oneapi.com&lt;/code&gt;）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ccs add my-proxy https://api.oneapi.com sk-verify-xxxxxxxxx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;API 地址通常不需要带 &lt;code&gt;/v1&lt;/code&gt; 后缀（具体看你中转商说明，Claude Code 官方通常拼接路径的方式不同，如果跑不通可以尝试去掉或加上 &lt;code&gt;/v1&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;名字 &lt;code&gt;my-proxy&lt;/code&gt; 可以随便取。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;3 切换到该配置&lt;/h3&gt;
+&lt;p&gt;添加后，你需要“激活”它，这样 &lt;code&gt;claude&lt;/code&gt; 命令才会使用这个配置。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ccs switch my-proxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;4. 验证是否生效&lt;/h3&gt;
+&lt;p&gt;现在，你可以再次尝试运行官方的 &lt;code&gt;claude&lt;/code&gt; 命令了：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;claude
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;此时发生的魔法是&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ccswitch&lt;/code&gt; 已经修改了 &lt;code&gt;~/.claude/settings.json&lt;/code&gt; 文件。&lt;/li&gt;
+&lt;li&gt;它写入了 &lt;code&gt;ANTHROPIC_BASE_URL&lt;/code&gt; 和 &lt;code&gt;ANTHROPIC_API_KEY&lt;/code&gt; 字段。&lt;/li&gt;
+&lt;li&gt;官方 &lt;code&gt;claude&lt;/code&gt; 工具启动时，读取到了这些配置，于是&lt;strong&gt;不再连接官方服务器，而是连接你的中转商&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;常用命令速查表&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;作用&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ccs list&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;列出你保存的所有 Key/配置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ccs add [name] [url] [key]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;添加一个新的中转商配置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ccs switch [name]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;切换到指定配置 (让 claude 立即生效)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ccs current&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看当前正在用哪个配置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ccs remove [name]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;删除某个配置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;关键提示&lt;/h3&gt;
+&lt;p&gt;如果运行后 &lt;code&gt;claude&lt;/code&gt; 依然报错（比如 404 或连接错误），通常是 &lt;strong&gt;API 地址格式&lt;/strong&gt; 不对。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有些中转商需要地址结尾加 &lt;code&gt;/v1&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;有些需要加 &lt;code&gt;/api/anthropic&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;你可以用 &lt;code&gt;ccs edit my-proxy&lt;/code&gt; 来修改地址重新尝试。&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded></item><item><title>如何独立解决问题？</title><link>https://paradoxmoranis.github.io/posts/howtosolveproblemsbyyourself/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/howtosolveproblemsbyyourself/</guid><description>本篇文章主要是我的一些思考和方法，希望对大家有所帮助。</description><pubDate>Wed, 26 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;&lt;strong&gt;为什么一个大三计算机学生会被一个 SCP 命令困住？——我的反思与一份方法论&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;昨天发生了一件小事，却让我思考了很久。&lt;/p&gt;
 &lt;p&gt;一位和我同样读大三的朋友问我：&lt;strong&gt;“怎么往算力平台传文件？”&lt;/strong&gt;
