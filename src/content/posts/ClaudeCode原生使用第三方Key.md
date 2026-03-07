@@ -1,5 +1,5 @@
 ---
-title: ClaudeCode使用西风API
+title: ClaudeCode使用第三方API
 published: 2025-12-05
 pinned: false
 description: 本篇文章主要讲解如何使用原生ClaudeCode配合第三方API。
