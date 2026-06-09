@@ -46,11 +46,7 @@ export const siteConfig: SiteConfig = {
 		src: {
 			desktop: [
 				"/assets/desktop-banner/1.webp",
-				"/assets/desktop-banner/2.webp",
-				"/assets/desktop-banner/3.webp",
-				"/assets/desktop-banner/4.webp",
-				"/assets/desktop-banner/5.webp",
-				"/assets/desktop-banner/6.webp",
+				"/assets/desktop-banner/2.jpeg",
 			], // 桌面横幅图片
 			mobile: [
 				"/assets/mobile-banner/1.webp",
@@ -84,10 +80,10 @@ export const siteConfig: SiteConfig = {
 			title: "MoranisZ Blog", // 主页横幅主标题
 
 			subtitle: [
-				"水无定，花有尽，会相逢。可是人生常在别离中",
-				"可是困住我青春的人，始终没有回头看我一眼",
-				"有一天我不再寻求幸福的秘诀，我只希望遇到一个和我一样心软的人",
-				"也许从一开始一切就都是错的",
+				"Nice to meet YOU!",
+				"I'm Moranis,a college student in Beijing.",
+				"Connect with me:moranisparadox@gmail.com.",
+				"Star my github projects!",
 			],
 			typewriter: {
 				enable: true, // 启用副标题打字机效果
