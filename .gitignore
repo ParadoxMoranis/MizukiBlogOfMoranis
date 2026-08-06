@@ -29,3 +29,6 @@ yarn.lock
 # ide
 .idea
 *.iml
+
+# Local recovery snapshots created before large UI refactors
+.ui-backups/

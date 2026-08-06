@@ -14,51 +14,37 @@ import TranslateButton from "./widget/TranslateButton.svelte";
 
 const className = Astro.props.class;
 
-// 获取导航栏透明模式配置
-const navbarTransparentMode =
-	siteConfig.banner?.navbar?.transparentMode || "semi";
-
-// 检查是否为首页
+const navbarTransparentMode = siteConfig.banner?.navbar?.transparentMode || "semi";
 const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
-
-let links: NavBarLink[] = navBarConfig.links.map(
-	(item: NavBarLink | LinkPreset): NavBarLink => {
-		if (typeof item === "number") {
-			return LinkPresets[item];
-		}
-		return item;
-	},
+const links: NavBarLink[] = navBarConfig.links.map(
+	(item: NavBarLink | LinkPreset): NavBarLink =>
+		typeof item === "number" ? LinkPresets[item] : item,
 );
 ---
 <div id="navbar" class="z-50 onload-animation" data-transparent-mode={navbarTransparentMode} data-is-home={isHomePage}>
-    <div class="absolute h-8 left-0 right-0 -top-8 bg-[var(--card-bg)] transition"></div> <!-- used for onload animation -->
-    <div class:list={[
-        className,
-        "!overflow-visible max-w-[var(--page-width)] h-[4.5rem] mx-auto flex items-center justify-between px-4"]}>
-        <a href={url('/')} class="btn-plain scale-animation rounded-lg h-[3.25rem] px-5 font-bold active:scale-95">
-            <div class="flex flex-row text-[var(--primary)] items-center text-md">
+    <div class="absolute h-8 left-0 right-0 -top-8 bg-[var(--card-bg)] transition"></div>
+    <div class:list={[className, "neo-navbar-inner !overflow-visible max-w-[var(--page-width)] h-[4.5rem] mx-auto flex items-center justify-between px-4"]}>
+        <a href={url('/')} class="neo-navbar-brand btn-plain scale-animation active:scale-95">
+            <div class="flex flex-row items-center text-md font-bold">
                 <Icon name="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" />
                 {siteConfig.title}
             </div>
         </a>
-        <div class="hidden md:flex items-center space-x-1">
-            {links.map((l) => {
-                return <DropdownMenu link={l} />;
-            })}
+        <div class="neo-navbar-links hidden md:flex items-center space-x-1">
+            {links.map((link) => <DropdownMenu link={link} />)}
         </div>
-        <div class="flex">
-            <!--<SearchPanel client:load>-->
+        <div class="neo-navbar-actions flex items-center">
             <Search client:only="svelte"></Search>
             <MobileTOC client:only="svelte"></MobileTOC>
             <TranslateButton client:only="svelte"></TranslateButton>
             {!siteConfig.themeColor.fixed && (
-                    <button aria-label="Display Settings" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
-                        <Icon name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
-                    </button>
+                <button aria-label="Display Settings" class="neo-nav-action btn-plain scale-animation h-11 w-11 active:scale-90" id="display-settings-switch">
+                    <Icon name="material-symbols:palette-outline" class="text-[1.25rem]" />
+                </button>
             )}
             <LightDarkSwitch client:only="svelte"></LightDarkSwitch>
-            <button aria-label="Menu" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 md:!hidden" id="nav-menu-switch">
-                <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]"></Icon>
+            <button aria-label="Menu" name="Nav Menu" class="neo-nav-action btn-plain scale-animation w-11 h-11 active:scale-90 md:!hidden" id="nav-menu-switch">
+                <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]" />
             </button>
         </div>
         <NavMenuPanel links={links}></NavMenuPanel>
