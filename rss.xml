@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://paradoxmoranis.github.io/MizukiBlogOfMoranis/</link><language>en</language><item><title>为什么使用Linux的开发者讨厌Windows？</title><link>https://paradoxmoranis.github.io/posts/%E4%B8%BA%E4%BB%80%E4%B9%88linux%E5%BC%80%E5%8F%91%E8%80%85%E8%AE%A8%E5%8E%8Cwindows/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E4%B8%BA%E4%BB%80%E4%B9%88linux%E5%BC%80%E5%8F%91%E8%80%85%E8%AE%A8%E5%8E%8Cwindows/</guid><description>本篇文章主要从多个角度分析Windows的槽点。</description><pubDate>Tue, 09 Jun 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;引言&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Moranis</title><description>MoranisZ Blog</description><link>https://moranis.blog/</link><language>en</language><item><title>为什么使用Linux的开发者讨厌Windows？</title><link>https://moranis.blog/posts/%E4%B8%BA%E4%BB%80%E4%B9%88linux%E5%BC%80%E5%8F%91%E8%80%85%E8%AE%A8%E5%8E%8Cwindows/</link><guid isPermaLink="true">https://moranis.blog/posts/%E4%B8%BA%E4%BB%80%E4%B9%88linux%E5%BC%80%E5%8F%91%E8%80%85%E8%AE%A8%E5%8E%8Cwindows/</guid><description>本篇文章主要从多个角度分析Windows的槽点。</description><pubDate>Tue, 09 Jun 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;引言&lt;/h1&gt;
 &lt;p&gt;从服务器到个人，Linux可谓是越来越受到业内人士的青睐。为什么越来越多的人，尤其是开发者，都开始抛弃windows转而改用Linux？我想有以下原因。&lt;/p&gt;
 &lt;h2&gt;开发生态比windows丰富且易用&lt;/h2&gt;
 &lt;p&gt;我认为这是最重要的原因（也可能是之一）。&lt;br /&gt;
 说丰富，机器学习有个高性能大语言模型推理框架，MinerU等知名项目都在使用。曾经我想在Windows自己部署一个MinerU用，发现vLLM并没有Windows的支持。推特上有个很知名的帖子，内容是hyprland开发团队表示永远不会做Windows的支持。
-&lt;img src=&quot;https://paradoxmoranis.github.io/images/posts/Hyprland.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://moranis.blog/images/posts/Hyprland.png&quot; alt=&quot;&quot; /&gt;
 开源社区里的开发者也未必喜欢做windows平台的适配开发（所以我觉得这也是开发者喜欢跨平台技术栈的原因）。还有很多例子我就不一一列出了。
 说易用，我给出两台刚刚装好系统的Windows主机和Linux主机，我操作Linux，你和我比赛，看谁先写出一个hello world并编译运行。我想你赢不了，虽然我打字不是那么快那么熟练。Linux用户用包管理器装个gcc然后用vim直接就可以写，旁边的Windows还要去下载安装MinGW,配环境变量，写和编译还要费时。简单的例子说完了，复杂的也一样，数据库，面板等也都是几条命令的事。
 我觉得 &lt;strong&gt;开发&lt;/strong&gt; 生态丰富和易用应该不会有反驳吧。&lt;/p&gt;
 &lt;h2&gt;Windows的恶心的体验&lt;/h2&gt;
 &lt;p&gt;打开你的Windows的任务管理器，32GB的RAM开机就少了16有没有？至少我的是这样的。
-&lt;img src=&quot;https://paradoxmoranis.github.io/images/posts/WindowsSM.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://moranis.blog/images/posts/WindowsSM.png&quot; alt=&quot;&quot; /&gt;
 而我的ArchLinux就不一样了，刚开机只有20%的占用（16G RAM）
-&lt;img src=&quot;https://paradoxmoranis.github.io/images/posts/LinuxBtop.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://moranis.blog/images/posts/LinuxBtop.png&quot; alt=&quot;&quot; /&gt;
 而且，你对你的Windows似乎没有全部的掌控权，甚至Windows认为有问题的软件都会直接给你删掉，例如Github的一个开源内网穿透工具。&lt;br /&gt;
 最离谱的是我有一次Windows的性能控制软件卡死，我想kill这个进程，在任务管理器里反复的结束任务最后都没用。。。
 Windows的臃肿，莫名其妙的Bug,不断的更新等等等等都严重影响了用户的体验，至少我是这样认为的。&lt;/p&gt;
@@ -22,7 +22,7 @@ Windows的臃肿，莫名其妙的Bug,不断的更新等等等等都严重影响
 另一点就是Linux并不是新手友好的，我知道有人要说命令不难之类的话。我这里说的新手不友好是说使用Linux需要一定的计算机基本的知识。什么是路径？文件后缀名有什么意义？用Windows的新手用户才不会想这么多，他们大概只知道D盘C盘，只知道双击一个文件，甚至像Galgame圈子里传的那样，不会用解压软件，甚至下载的软件都是错误的。所以我说Linux不是新手友好的。&lt;/p&gt;
 &lt;h2&gt;总结&lt;/h2&gt;
 &lt;p&gt;其实我是不太喜欢引起争论或者断言的，所以很多观点我都说“至少我认为”，但是在开发时被Windows折磨过很长一段时间，我也想跟一句：“Fuck Windows”&lt;/p&gt;
-</content:encoded></item><item><title>WSL的基本安装与配置</title><link>https://paradoxmoranis.github.io/posts/wsl%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/wsl%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid><description>本篇文章主要讲解WSL的基本安装与配置方法。</description><pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;WSL2 简介&lt;/h2&gt;
+</content:encoded></item><item><title>WSL的基本安装与配置</title><link>https://moranis.blog/posts/wsl%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link><guid isPermaLink="true">https://moranis.blog/posts/wsl%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid><description>本篇文章主要讲解WSL的基本安装与配置方法。</description><pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;WSL2 简介&lt;/h2&gt;
 &lt;p&gt;WSL（Windows Subsystem for Linux）是微软开发的一个兼容层，允许在 Windows 系统上原生运行 Linux 二进制可执行文件。WSL2 是 WSL 的第二代版本，使用真实的 Linux 内核，提供了更好的性能和完整的系统调用兼容性。&lt;/p&gt;
 &lt;h2&gt;系统要求&lt;/h2&gt;
 &lt;ul&gt;
@@ -320,7 +320,7 @@ wsl --import Ubuntu D:\WSL\Ubuntu D:\backup\ubuntu-backup.tar --version 2
 &lt;li&gt;&lt;a href=&quot;https://ubuntu.com/wsl&quot;&gt;Ubuntu WSL 文档&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/microsoft/WSL&quot;&gt;WSL GitHub 仓库&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded></item><item><title>中国大学生计算机科学学习路线推荐</title><link>https://paradoxmoranis.github.io/posts/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9Fcs%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9Fcs%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/</guid><description>本篇文章主要讲述一下计算机专业学生的学习路线，仅作参考，读者应结合自身教育情况选择适合自己的方法。</description><pubDate>Fri, 20 Feb 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;引言&lt;/h1&gt;
+</content:encoded></item><item><title>中国大学生计算机科学学习路线推荐</title><link>https://moranis.blog/posts/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9Fcs%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/</link><guid isPermaLink="true">https://moranis.blog/posts/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9Fcs%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/</guid><description>本篇文章主要讲述一下计算机专业学生的学习路线，仅作参考，读者应结合自身教育情况选择适合自己的方法。</description><pubDate>Fri, 20 Feb 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;引言&lt;/h1&gt;
 &lt;p&gt;我了解过不少高校的计算机专业的教育方案和学习路线，无论是北京大学这种TOP2，还是一些普通本科院校，我都有所了解。不过说实在的，我肯定还是更清楚自己的院校情况。但我想说，作为科班学生，我们有很多通用的基本功需要掌握，而这些恰恰是大部分院校并不教授的，但这部分知识和技能却非常有用。所以我写下这篇文章，希望能促进大家自行学习CS技术，也帮助大家更好地规划本科阶段的学习时间。&lt;/p&gt;
 &lt;h2&gt;我的情况&lt;/h2&gt;
 &lt;p&gt;事情是大一的时候遇到了已经工作多年的前辈，同样是中国高校教育出来的人，他深知我们现在的高校教育，尤其是本科阶段的教育，缺失了很多应该掌握的基本功。所以他一直带我学技术，我呢也很有兴趣，因此我经常旷课，自己研究，自己的绩点相当的低，是全年级的倒数。也没少挂科，重修。虽然后面有幸进入了ICALL实验室并有机会参与科研，但是我想说，我这样的取舍是非常错误的，所以我想为读者做一份我理想的规划。&lt;/p&gt;
@@ -500,7 +500,7 @@ wsl --import Ubuntu D:\WSL\Ubuntu D:\backup\ubuntu-backup.tar --version 2
 &lt;p&gt;::github{repo=&quot;huangrt01/CS-Notes&quot;}&lt;/p&gt;
 &lt;h2&gt;总结&lt;/h2&gt;
 &lt;p&gt;计算机技术是一个非常宽泛的领域，需要我们学的广，在某一领域深入研究学习。希望本篇文章可以帮助大家。&lt;/p&gt;
-</content:encoded></item><item><title>常用资源分享</title><link>https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/</guid><description>本篇文章主要是一些比较好用的，常用的内容资源的分享。</description><pubDate>Fri, 23 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;常用资源分享&lt;/h1&gt;
+</content:encoded></item><item><title>常用资源分享</title><link>https://moranis.blog/posts/%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/</link><guid isPermaLink="true">https://moranis.blog/posts/%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/</guid><description>本篇文章主要是一些比较好用的，常用的内容资源的分享。</description><pubDate>Fri, 23 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;常用资源分享&lt;/h1&gt;
 &lt;p&gt;我把一些常用的东西写在这篇文章中，不仅仅是分享，也是给自己一个备忘录。&lt;/p&gt;
 &lt;h2&gt;开发&lt;/h2&gt;
 &lt;h3&gt;1.VPN机场（aff链接）&lt;/h3&gt;
@@ -609,7 +609,7 @@ Linux终端命令提示器
 &lt;/ul&gt;
 &lt;h2&gt;最后&lt;/h2&gt;
 &lt;p&gt;暂时就这些。&lt;/p&gt;
-</content:encoded></item><item><title>ClaudeCode使用第三方API</title><link>https://paradoxmoranis.github.io/posts/claudecode%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9key/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/claudecode%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9key/</guid><description>本篇文章主要讲解如何使用原生ClaudeCode配合第三方API。</description><pubDate>Fri, 05 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;摘要&lt;/h1&gt;
+</content:encoded></item><item><title>ClaudeCode使用第三方API</title><link>https://moranis.blog/posts/claudecode%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9key/</link><guid isPermaLink="true">https://moranis.blog/posts/claudecode%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9key/</guid><description>本篇文章主要讲解如何使用原生ClaudeCode配合第三方API。</description><pubDate>Fri, 05 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;摘要&lt;/h1&gt;
 &lt;p&gt;ClaudeCode作为CLI的工具，不仅可以写代码，还能执行命令做很多其他的事情。但是官方API不仅贵还锁国区。所以优质的第三方API是很多人的选择。本文介绍如何使用原生ClaudeCode+CCSwitch跳过A社登陆使用第三方API。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;我的实验环境是ArchLinux,其他操作系统暂未尝试，如有错误请指正。&lt;/p&gt;
@@ -712,7 +712,7 @@ export no_proxy=&quot;localhost,127.0.0.1,::1&quot;&lt;/li&gt;
 &lt;li&gt;有些需要加 &lt;code&gt;/api/anthropic&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;你可以用 &lt;code&gt;ccs edit my-proxy&lt;/code&gt; 来修改地址重新尝试。&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded></item><item><title>LazyVim安装与初步配置</title><link>https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</guid><description>本篇文章主要讲解LazyVim的安装与配置，以及一些基本配置和功能。</description><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Lazyvim安装与初步配置&lt;/h1&gt;
+</content:encoded></item><item><title>LazyVim安装与初步配置</title><link>https://moranis.blog/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</link><guid isPermaLink="true">https://moranis.blog/posts/lazyvim%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%9D%E6%AD%A5%E9%85%8D%E7%BD%AE/</guid><description>本篇文章主要讲解LazyVim的安装与配置，以及一些基本配置和功能。</description><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Lazyvim安装与初步配置&lt;/h1&gt;
 &lt;h3&gt;1. 安装 LazyVim&lt;/h3&gt;
 &lt;p&gt;确保已经安装了 Neovim。然后按照以下步骤安装 LazyVim：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# 备份现有的 Neovim 配置（如果有）
@@ -912,7 +912,7 @@ vim.opt.termguicolors = true -- 启用真彩色（好看主题需要）
 &lt;li&gt;Treesitter 插件：https://github.com/nvim-treesitter/nvim-treesitter&lt;/li&gt;
 &lt;li&gt;Catppuccin 主题：https://github.com/catppuccin/nvim&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded></item><item><title>开发过程中常用的软件和我平时使用的软件</title><link>https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</guid><description>本篇文章主要讲解开发过程中常用的软件和我平时使用的软件。</description><pubDate>Fri, 17 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;常用开发以及实用的日常软件&lt;/h1&gt;
+</content:encoded></item><item><title>开发过程中常用的软件和我平时使用的软件</title><link>https://moranis.blog/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</link><guid isPermaLink="true">https://moranis.blog/posts/%E5%B8%B8%E7%94%A8%E5%BC%80%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%94%A8%E7%9A%84%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/</guid><description>本篇文章主要讲解开发过程中常用的软件和我平时使用的软件。</description><pubDate>Fri, 17 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;常用开发以及实用的日常软件&lt;/h1&gt;
 &lt;h2&gt;开发相关软件&lt;/h2&gt;
 &lt;h3&gt;1.VSCode（注意与VS2022等区分）：万能轻量编辑器&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code 官网&lt;/a&gt;&lt;/p&gt;
@@ -968,7 +968,7 @@ vim.opt.termguicolors = true -- 启用真彩色（好看主题需要）
 &lt;p&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker: Accelerated Container Application Development&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV14s4y1i7Vf/?share_source=copy_web&amp;amp;vd_source=531032478db11b1deb9b055e9157db27&quot;&gt;30分钟Docker入门教程&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>WSL的特性以及一些使用技巧</title><link>https://paradoxmoranis.github.io/posts/wsl%E7%9A%84%E4%BD%BF%E7%94%A8/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/wsl%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>本篇文章主要讲解WSL的特性以及一些使用技巧。</description><pubDate>Mon, 13 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;前情提要&lt;/h1&gt;
+</content:encoded></item><item><title>WSL的特性以及一些使用技巧</title><link>https://moranis.blog/posts/wsl%E7%9A%84%E4%BD%BF%E7%94%A8/</link><guid isPermaLink="true">https://moranis.blog/posts/wsl%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>本篇文章主要讲解WSL的特性以及一些使用技巧。</description><pubDate>Mon, 13 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;前情提要&lt;/h1&gt;
 &lt;p&gt;最近在使用MinerU，发现MinerU使用的vLLM加速不支持Windows，而且我的ArchLinux的机器没有显卡，所以想到了WSL。用了一下感觉还不错，写一篇文章记录一下。&lt;/p&gt;
 &lt;h2&gt;1.WSL的特性（仅在我使用中的感受）&lt;/h2&gt;
 &lt;h3&gt;1. 跨系统文件操作&lt;/h3&gt;
@@ -1077,7 +1077,7 @@ localhostForwarding=true
 转发端口：netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=8000 connectaddress=172.XX.XX.XX connectport=8000。
 访问：http://localhost:8000。&lt;/p&gt;
 &lt;p&gt;注意：确保防火墙允许端口，测试用 curl http://localhost:7860。&lt;/p&gt;
-</content:encoded></item><item><title>qETRC在ArchLinxu的构建</title><link>https://paradoxmoranis.github.io/posts/qetrc/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/qetrc/</guid><description>本篇文章主要讲解如何在ArchLinux上构建qETRC。其他操作系统请自行搜索。</description><pubDate>Sat, 13 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;qETRC在ArchLinxu的构建方法&lt;/h1&gt;
+</content:encoded></item><item><title>qETRC在ArchLinxu的构建</title><link>https://moranis.blog/posts/qetrc/</link><guid isPermaLink="true">https://moranis.blog/posts/qetrc/</guid><description>本篇文章主要讲解如何在ArchLinux上构建qETRC。其他操作系统请自行搜索。</description><pubDate>Sat, 13 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;qETRC在ArchLinxu的构建方法&lt;/h1&gt;
 &lt;h2&gt;安装第三方库&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo pacman -S base-devel cmake qt6-base qt6-tools qt6-declarative qt6-quickcontrols2 qt6-svg qt6-webengine qt6-webchannel qt6-webview qt6-websockets qt6-x11extras SARibbon
 &lt;/code&gt;&lt;/pre&gt;
@@ -1159,103 +1159,7 @@ else()
 &lt;li&gt;能够正确处理不同构建类型（Debug/Release）的目标文件路径&lt;/li&gt;
 &lt;li&gt;自动处理平台特定的文件扩展名和前缀（如Windows的.dll，Linux的.so）&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded></item><item><title>Arch-关于wayland下获取录屏流</title><link>https://paradoxmoranis.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
-&lt;h2&gt;1.安装pipewire以及相关包&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S pipewire pipewire-pulse pipewire-alsa qt6-wayland
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;2.确保PipeWire服务正在运行&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;systemctl --user enable --now pipewire pipewire-pluse
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;3.安装xdg-desktop&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S xdg-desktop-portal-kde # 如果是hyprland就是xdg-desktop-portal-hyprland，以此类推
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;做完这些，OBS中就可以看到&lt;code&gt;屏幕捕捉(pipewire)&lt;/code&gt;&lt;/p&gt;
-</content:encoded></item><item><title>Arch-使用OBS的虚拟摄像头</title><link>https://paradoxmoranis.github.io/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</guid><description>本篇文章主要讲解如何使用OBS的虚拟摄像头。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;在Arch使用OBS的虚拟摄像头&lt;/h1&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;检查 OBS Studio 版本&lt;/strong&gt;&lt;br /&gt;
-确保你的 OBS Studio 版本支持虚拟摄像头功能。虚拟摄像头支持从 OBS Studio 26.1 开始引入。运行以下命令检查版本：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pacman -Q obs-studio
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果版本低于 26.1，建议更新到最新版本：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S obs-studio
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;安装 v4l2loopback 模块&lt;/strong&gt;&lt;br /&gt;
-虚拟摄像头需要 &lt;code&gt;v4l2loopback&lt;/code&gt; 内核模块支持。安装 &lt;code&gt;v4l2loopback-dkms&lt;/code&gt; 和相关工具：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S v4l2loopback-dkms v4l2loopback-utils
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;确保你的系统已安装内核头文件（&lt;code&gt;linux-headers&lt;/code&gt; 或对应内核的头文件，例如 &lt;code&gt;linux-lts-headers&lt;/code&gt;）：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S linux-headers
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;加载 v4l2loopback 模块&lt;/strong&gt;&lt;br /&gt;
-安装完成后，手动加载 &lt;code&gt;v4l2loopback&lt;/code&gt; 模块：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo modprobe v4l2loopback
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;你可以检查模块是否加载成功：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;lsmod | grep v4l2loopback
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果需要自定义虚拟摄像头设备，可以指定参数，例如：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo modprobe v4l2loopback devices=1 video_nr=2 card_label=&quot;OBS Virtual Camera&quot; exclusive_caps=1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这会创建一个名为 &quot;OBS Virtual Camera&quot; 的设备，位于 &lt;code&gt;/dev/video2&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;检查 OBS 设置&lt;/strong&gt;&lt;br /&gt;
-启动 OBS Studio，检查“控制”面板中是否出现“启动虚拟摄像头”按钮。如果没有，可能是以下原因：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;模块未加载&lt;/strong&gt;：确保 &lt;code&gt;v4l2loopback&lt;/code&gt; 模块已正确加载。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Flatpak 安装问题&lt;/strong&gt;：如果你通过 Flatpak 安装了 OBS Studio，虚拟摄像头可能不可用。建议使用 Arch 官方仓库的版本：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S obs-studio
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Wayland 支持&lt;/strong&gt;：如果使用 Wayland 桌面环境，确保安装了 &lt;code&gt;qt6-wayland&lt;/code&gt;（OBS 28 及以上版本需要）：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -S qt6-wayland
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;验证虚拟摄像头&lt;/strong&gt;&lt;br /&gt;
-启动虚拟摄像头后，检查是否出现在设备列表中：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;v4l2-ctl --list-devices
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;你应该能看到类似 &quot;OBS Virtual Camera&quot; 的设备。如果设备存在但无法在其他应用（如 Zoom、Skype）中使用，可能是权限问题。确保你的用户在 &lt;code&gt;video&lt;/code&gt; 组中：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo usermod -aG video $USER
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后重新登录或重启系统。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;解决常见问题&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;“启动虚拟摄像头失败”错误&lt;/strong&gt;：检查日志文件（在 OBS 的“帮助”菜单中选择“日志文件”）。常见问题可能是 &lt;code&gt;v4l2loopback&lt;/code&gt; 版本与内核不兼容。尝试降级到较旧的版本（例如 0.13.2）：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo pacman -R v4l2loopback-dkms v4l2loopback-utils
-yay -S v4l2loopback-dkms=0.13.2-1 v4l2loopback-utils=0.13.2-1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;与其他设备冲突&lt;/strong&gt;：如果有其他设备（如 DroidCam）占用 &lt;code&gt;/dev/video0&lt;/code&gt;，可以卸载冲突模块：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo modprobe -r v4l2loopback
-sudo modprobe v4l2loopback
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;重启 OBS 和系统&lt;/strong&gt;&lt;br /&gt;
-在安装模块或更改配置后，重启 OBS Studio 或整个系统以确保所有更改生效。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;ArchWiki&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://paradoxmoranis.github.io/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解Paru和Pacman的用法。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
+</content:encoded></item><item><title>Arch-paru和pacman用法详解</title><link>https://moranis.blog/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</link><guid isPermaLink="true">https://moranis.blog/posts/pacman%E5%92%8Cparu%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid><description>本篇文章主要讲解Paru和Pacman的用法。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;pacman和paru用法详解&lt;/h1&gt;
 &lt;h2&gt;一、pacman 用法&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pacman&lt;/code&gt;（Package Manager）是 Arch Linux 的核心包管理工具，用于安装、更新、删除和管理官方仓库中的软件包。它的命令通常需要以 &lt;code&gt;sudo&lt;/code&gt; 运行，因为包管理涉及系统级操作。&lt;/p&gt;
 &lt;h3&gt;1. 基本命令格式&lt;/h3&gt;
@@ -1630,4 +1534,100 @@ sudo pacman-key --populate archlinux
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+</content:encoded></item><item><title>Arch-关于wayland下获取录屏流</title><link>https://moranis.blog/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</link><guid isPermaLink="true">https://moranis.blog/posts/%E5%85%B3%E4%BA%8Ewayland%E4%B8%8B%E8%8E%B7%E5%8F%96%E5%BD%95%E5%B1%8F%E6%B5%81/</guid><description>本篇文章主要讲解如何在wayland下获取录屏流以便于使用OBS。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;关于wayland下获取录屏流&lt;/h1&gt;
+&lt;h2&gt;1.安装pipewire以及相关包&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S pipewire pipewire-pulse pipewire-alsa qt6-wayland
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;2.确保PipeWire服务正在运行&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;systemctl --user enable --now pipewire pipewire-pluse
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;3.安装xdg-desktop&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S xdg-desktop-portal-kde # 如果是hyprland就是xdg-desktop-portal-hyprland，以此类推
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;做完这些，OBS中就可以看到&lt;code&gt;屏幕捕捉(pipewire)&lt;/code&gt;&lt;/p&gt;
+</content:encoded></item><item><title>Arch-使用OBS的虚拟摄像头</title><link>https://moranis.blog/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</link><guid isPermaLink="true">https://moranis.blog/posts/%E5%9C%A8arch%E4%BD%BF%E7%94%A8obs%E7%9A%84%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</guid><description>本篇文章主要讲解如何使用OBS的虚拟摄像头。</description><pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;在Arch使用OBS的虚拟摄像头&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;检查 OBS Studio 版本&lt;/strong&gt;&lt;br /&gt;
+确保你的 OBS Studio 版本支持虚拟摄像头功能。虚拟摄像头支持从 OBS Studio 26.1 开始引入。运行以下命令检查版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -Q obs-studio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果版本低于 26.1，建议更新到最新版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S obs-studio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装 v4l2loopback 模块&lt;/strong&gt;&lt;br /&gt;
+虚拟摄像头需要 &lt;code&gt;v4l2loopback&lt;/code&gt; 内核模块支持。安装 &lt;code&gt;v4l2loopback-dkms&lt;/code&gt; 和相关工具：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S v4l2loopback-dkms v4l2loopback-utils
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;确保你的系统已安装内核头文件（&lt;code&gt;linux-headers&lt;/code&gt; 或对应内核的头文件，例如 &lt;code&gt;linux-lts-headers&lt;/code&gt;）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S linux-headers
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;加载 v4l2loopback 模块&lt;/strong&gt;&lt;br /&gt;
+安装完成后，手动加载 &lt;code&gt;v4l2loopback&lt;/code&gt; 模块：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo modprobe v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你可以检查模块是否加载成功：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;lsmod | grep v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果需要自定义虚拟摄像头设备，可以指定参数，例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo modprobe v4l2loopback devices=1 video_nr=2 card_label=&quot;OBS Virtual Camera&quot; exclusive_caps=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这会创建一个名为 &quot;OBS Virtual Camera&quot; 的设备，位于 &lt;code&gt;/dev/video2&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;检查 OBS 设置&lt;/strong&gt;&lt;br /&gt;
+启动 OBS Studio，检查“控制”面板中是否出现“启动虚拟摄像头”按钮。如果没有，可能是以下原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;模块未加载&lt;/strong&gt;：确保 &lt;code&gt;v4l2loopback&lt;/code&gt; 模块已正确加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Flatpak 安装问题&lt;/strong&gt;：如果你通过 Flatpak 安装了 OBS Studio，虚拟摄像头可能不可用。建议使用 Arch 官方仓库的版本：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S obs-studio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Wayland 支持&lt;/strong&gt;：如果使用 Wayland 桌面环境，确保安装了 &lt;code&gt;qt6-wayland&lt;/code&gt;（OBS 28 及以上版本需要）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S qt6-wayland
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;验证虚拟摄像头&lt;/strong&gt;&lt;br /&gt;
+启动虚拟摄像头后，检查是否出现在设备列表中：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;v4l2-ctl --list-devices
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你应该能看到类似 &quot;OBS Virtual Camera&quot; 的设备。如果设备存在但无法在其他应用（如 Zoom、Skype）中使用，可能是权限问题。确保你的用户在 &lt;code&gt;video&lt;/code&gt; 组中：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo usermod -aG video $USER
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后重新登录或重启系统。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;解决常见问题&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;“启动虚拟摄像头失败”错误&lt;/strong&gt;：检查日志文件（在 OBS 的“帮助”菜单中选择“日志文件”）。常见问题可能是 &lt;code&gt;v4l2loopback&lt;/code&gt; 版本与内核不兼容。尝试降级到较旧的版本（例如 0.13.2）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -R v4l2loopback-dkms v4l2loopback-utils
+yay -S v4l2loopback-dkms=0.13.2-1 v4l2loopback-utils=0.13.2-1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;与其他设备冲突&lt;/strong&gt;：如果有其他设备（如 DroidCam）占用 &lt;code&gt;/dev/video0&lt;/code&gt;，可以卸载冲突模块：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo modprobe -r v4l2loopback
+sudo modprobe v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;重启 OBS 和系统&lt;/strong&gt;&lt;br /&gt;
+在安装模块或更改配置后，重启 OBS Studio 或整个系统以确保所有更改生效。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;参考来源：&lt;a href=&quot;https://wiki.archlinux.org/title/Open_Broadcaster_Software&quot;&gt;ArchWiki&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=304978&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://bbs.archlinux.org/viewtopic.php?id=305169&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item></channel></rss>
