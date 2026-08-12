@@ -1,8 +1,9 @@
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+
 import { LinkPreset, type NavBarLink } from "@/types/config";
 
-export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
+export const LinkPresets: Record<LinkPreset, NavBarLink> = {
 	[LinkPreset.Home]: {
 		name: i18n(I18nKey.home),
 		url: "/",
@@ -33,9 +34,9 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/diary/",
 		icon: "material-symbols:book",
 	},
-	[LinkPreset.Gallery]: {
-		name: i18n(I18nKey.gallery),
-		url: "/gallery/",
+	[LinkPreset.Albums]: {
+		name: i18n(I18nKey.albums),
+		url: "/albums/",
 		icon: "material-symbols:photo-library",
 	},
 	[LinkPreset.Projects]: {
@@ -52,5 +53,10 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		name: i18n(I18nKey.timeline),
 		url: "/timeline/",
 		icon: "material-symbols:timeline",
+	},
+	[LinkPreset.AITools]: {
+		name: i18n(I18nKey.aiTools),
+		url: "/ai-tools/",
+		icon: "material-symbols:smart-toy",
 	},
 };

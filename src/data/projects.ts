@@ -1,6 +1,3 @@
-// Project data configuration file
-// Used to manage data for the project display page
-
 export interface Project {
 	id: string;
 	title: string;
@@ -8,136 +5,111 @@ export interface Project {
 	image: string;
 	category: "web" | "linux" | "desktop" | "other";
 	techStack: string[];
-	status: "completed" | "updating" | "planned";
+	status: "completed" | "in-progress" | "planned";
 	liveDemo?: string;
 	sourceCode?: string;
+	visitUrl?: string;
 	startDate: string;
 	endDate?: string;
 	featured?: boolean;
 	tags?: string[];
+	showImage?: boolean;
 }
 
 export const projectsData: Project[] = [
 	{
-		id: "RemoteClipboard",
+		id: "remote-clipboard",
 		title: "Remote Clipboard",
 		description:
 			"A cross-platform clipboard synchronization tool that connects through the internet.",
 		image: "",
 		category: "desktop",
-		techStack: ["C++", "Qt", "wayland", "win32API", "socket"],
+		techStack: ["C++", "Qt", "Wayland", "Win32 API", "Socket"],
 		status: "completed",
 		sourceCode: "https://github.com/ParadoxMoranis/RemoteClipboard",
 		startDate: "2024-12-16",
-		endDate: "2024-02-20",
+		endDate: "2025-02-20",
 		featured: true,
 		tags: ["Clipboard", "TCP", "Cross-platform", "Linux", "Lightweight"],
+		showImage: false,
 	},
 	{
-		id: "Source Sharing Website",
+		id: "moranis-site",
 		title: "Moranis Site",
 		description:
-			"Source code sharing website, showing almoist all kinds of source.",
+			"A source code sharing website covering a broad range of practical examples.",
 		image: "",
 		category: "web",
-		techStack: ["VUE3", "Next.js", "TypeScript", "Element UI"],
+		techStack: ["Vue 3", "Next.js", "TypeScript", "Element UI"],
 		status: "completed",
-		liveDemo: "https://moranis.site",
+		visitUrl: "https://moranis.site",
 		sourceCode: "https://github.com/ParadoxMoranis/Toolkit-Moranis",
-		startDate: "2025-05-13",
-		endDate: "2023-5-028",
+		startDate: "2023-05-28",
+		endDate: "2025-05-13",
 		featured: true,
-		tags: ["Go-gin", "VUE3", "TypeScript", "Element UI"],
+		tags: ["Go Gin", "Vue 3", "TypeScript", "Element UI"],
+		showImage: false,
 	},
-	// {
-	// 	id: 'task-manager-app',
-	// 	title: 'Task Manager App',
-	// 	description: 'Cross-platform task management application supporting team collaboration and project management.',
-	// 	image: '',
-	// 	category: 'mobile',
-	// 	techStack: ['React Native', 'TypeScript', 'Redux', 'Firebase'],
-	// 	status: 'in-progress',
-	// 	startDate: '2024-03-01',
-	// 	tags: ['Mobile', 'Productivity', 'Team Collaboration']
-	// },
 	{
-		id: "go gin",
-		title: "Go gin web guide",
+		id: "go-gin-web-guide",
+		title: "Go Gin Web Guide",
 		description:
-			"Learn go gin with my examples.Go gin web guide, a web guide for gin framework.",
+			"A practical guide to learning the Gin web framework through examples.",
 		image: "",
 		category: "web",
 		techStack: ["Go", "Gin", "Web"],
-		status: "updating",
+		status: "in-progress",
 		sourceCode:
 			"https://github.com/ParadoxMoranis/Innovation-Competition-for-the-Application-of-Educational-Information-Technology",
 		startDate: "2025-09-01",
-		endDate: "2025-9-07",
-		tags: ["competition", "Operation and Maintenance"],
+		endDate: "2025-09-07",
+		tags: ["Competition", "Operation and Maintenance"],
+		showImage: false,
 	},
-	// {
-	// 	id: 'e-commerce-platform',
-	// 	title: 'E-commerce Platform',
-	// 	description: 'Full-stack e-commerce platform including user management, product management, and order processing features.',
-	// 	image: '',
-	// 	category: 'web',
-	// 	techStack: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'],
-	// 	status: 'planned',
-	// 	startDate: '2024-07-01',
-	// 	tags: ['E-commerce', 'Full Stack', 'Payment Integration']
-	// }
 	{
-		id: "competition",
+		id: "competition-guide",
 		title:
-			"Innovation-Competition-for-the-Application-of-Educational-Information-Technology",
+			"Innovation Competition for the Application of Educational Information Technology",
 		description:
-			"Learning guide of Innovation Competition for the Application of Educational Information Technology",
+			"A learning guide for the Innovation Competition for the Application of Educational Information Technology.",
 		image: "",
 		category: "other",
-		techStack: ["Compitition", "guide"],
-		status: "updating",
+		techStack: ["Competition", "Guide"],
+		status: "in-progress",
 		sourceCode:
 			"https://github.com/ParadoxMoranis/Innovation-Competition-for-the-Application-of-Educational-Information-Technology",
 		startDate: "2025-09-01",
-		tags: ["competition", "Operation and Maintenance"],
+		tags: ["Competition", "Operation and Maintenance"],
+		showImage: false,
 	},
 ];
 
-// Get project statistics
 export const getProjectStats = () => {
 	const total = projectsData.length;
 	const completed = projectsData.filter((p) => p.status === "completed").length;
-	const inProgress = projectsData.filter((p) => p.status === "updating").length;
+	const inProgress = projectsData.filter(
+		(p) => p.status === "in-progress",
+	).length;
 	const planned = projectsData.filter((p) => p.status === "planned").length;
 
 	return {
 		total,
-		byStatus: {
-			completed,
-			inProgress,
-			planned,
-		},
+		byStatus: { completed, inProgress, planned },
 	};
 };
 
-// Get projects by category
 export const getProjectsByCategory = (category?: string) => {
-	if (!category || category === "all") {
-		return projectsData;
-	}
+	if (!category || category === "all") return projectsData;
 	return projectsData.filter((p) => p.category === category);
 };
 
-// Get featured projects
-export const getFeaturedProjects = () => {
-	return projectsData.filter((p) => p.featured);
-};
+export const getFeaturedProjects = () =>
+	projectsData.filter((p) => p.featured);
 
-// Get all tech stacks
 export const getAllTechStack = () => {
 	const techSet = new Set<string>();
-	projectsData.forEach((project) => {
-		project.techStack.forEach((tech) => techSet.add(tech));
-	});
+	for (const project of projectsData) {
+		for (const tech of project.techStack) techSet.add(tech);
+	}
 	return Array.from(techSet).sort();
 };

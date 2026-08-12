@@ -89,7 +89,7 @@ export const skillsData: Skill[] = [
 		level: "intermediate",
 		experience: { years: 1, months: 4 },
 		projects: ["e-commerce-frontend", "blog-platform"],
-		color: "#000000",
+		color: "#616161", // 更改为深灰色，避免纯黑色
 	},
 	{
 		id: "nuxtjs",
@@ -316,7 +316,7 @@ export const skillsData: Skill[] = [
 		level: "intermediate",
 		experience: { years: 1, months: 8 },
 		projects: ["data-visualization-tool"],
-		color: "#000000",
+		color: "#616161", // 更改为深灰色，避免纯黑色
 	},
 	{
 		id: "spring",
@@ -461,7 +461,7 @@ export const skillsData: Skill[] = [
 		level: "intermediate",
 		experience: { years: 1, months: 8 },
 		projects: ["java-enterprise", "spring-boot-app"],
-		color: "#000000",
+		color: "#616161", // 更改为深灰色，避免纯黑色
 	},
 	{
 		id: "pycharm",
@@ -485,7 +485,7 @@ export const skillsData: Skill[] = [
 		level: "beginner",
 		experience: { years: 0, months: 8 },
 		projects: ["dotnet-api", "desktop-app"],
-		color: "#000000",
+		color: "#616161", // 更改为深灰色，避免纯黑色
 	},
 	{
 		id: "goland",
@@ -677,49 +677,3 @@ export const skillsData: Skill[] = [
 		color: "#17202C",
 	},
 ];
-
-// Get skill statistics
-export const getSkillStats = () => {
-	const total = skillsData.length;
-	const byLevel = {
-		beginner: skillsData.filter((s) => s.level === "beginner").length,
-		intermediate: skillsData.filter((s) => s.level === "intermediate").length,
-		advanced: skillsData.filter((s) => s.level === "advanced").length,
-		expert: skillsData.filter((s) => s.level === "expert").length,
-	};
-	const byCategory = {
-		frontend: skillsData.filter((s) => s.category === "frontend").length,
-		backend: skillsData.filter((s) => s.category === "backend").length,
-		database: skillsData.filter((s) => s.category === "database").length,
-		tools: skillsData.filter((s) => s.category === "tools").length,
-		other: skillsData.filter((s) => s.category === "other").length,
-	};
-
-	return { total, byLevel, byCategory };
-};
-
-// Get skills by category
-export const getSkillsByCategory = (category?: string) => {
-	if (!category || category === "all") {
-		return skillsData;
-	}
-	return skillsData.filter((s) => s.category === category);
-};
-
-// Get advanced skills
-export const getAdvancedSkills = () => {
-	return skillsData.filter(
-		(s) => s.level === "advanced" || s.level === "expert",
-	);
-};
-
-// Calculate total years of experience
-export const getTotalExperience = () => {
-	const totalMonths = skillsData.reduce((total, skill) => {
-		return total + skill.experience.years * 12 + skill.experience.months;
-	}, 0);
-	return {
-		years: Math.floor(totalMonths / 12),
-		months: totalMonths % 12,
-	};
-};

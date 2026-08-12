@@ -6,10 +6,12 @@ class Sakura {
 	y: number;
 	s: number;
 	r: number;
+	a: number;
 	fn: {
 		x: (x: number, y: number) => number;
 		y: (x: number, y: number) => number;
 		r: (r: number) => number;
+		a: (a: number) => number;
 	};
 	idx: number;
 	img: HTMLImageElement;
@@ -21,10 +23,12 @@ class Sakura {
 		y: number,
 		s: number,
 		r: number,
+		a: number,
 		fn: {
 			x: (x: number, y: number) => number;
 			y: (x: number, y: number) => number;
 			r: (r: number) => number;
+			a: (a: number) => number;
 		},
 		idx: number,
 		img: HTMLImageElement,
@@ -35,6 +39,7 @@ class Sakura {
 		this.y = y;
 		this.s = s;
 		this.r = r;
+		this.a = a;
 		this.fn = fn;
 		this.idx = idx;
 		this.img = img;
@@ -46,21 +51,25 @@ class Sakura {
 		cxt.save();
 		cxt.translate(this.x, this.y);
 		cxt.rotate(this.r);
+		cxt.globalAlpha = this.a;
+		// 使用 transform 替代直接 drawImage 以支持 GPU 加速
 		cxt.drawImage(this.img, 0, 0, 40 * this.s, 40 * this.s);
 		cxt.restore();
 	}
 
 	update() {
 		this.x = this.fn.x(this.x, this.y);
-		this.y = this.fn.y(this.y, this.y);
+		this.y = this.fn.y(this.x, this.y);
 		this.r = this.fn.r(this.r);
+		this.a = this.fn.a(this.a);
 
-		// 如果樱花越界，重新调整位置
+		// 如果樱花越界或完全透明，重新调整位置
 		if (
 			this.x > window.innerWidth ||
 			this.x < 0 ||
 			this.y > window.innerHeight ||
-			this.y < 0
+			this.y < 0 ||
+			this.a <= 0
 		) {
 			// 如果樱花不做限制
 			if (this.limitArray[this.idx] === -1) {
@@ -83,11 +92,13 @@ class Sakura {
 			this.y = 0;
 			this.s = getRandom("s", this.config);
 			this.r = getRandom("r", this.config);
+			this.a = getRandom("a", this.config);
 		} else {
 			this.x = window.innerWidth;
 			this.y = getRandom("y", this.config);
 			this.s = getRandom("s", this.config);
 			this.r = getRandom("r", this.config);
+			this.a = getRandom("a", this.config);
 		}
 	}
 }
@@ -126,7 +137,9 @@ class SakuraList {
 }
 
 // 获取随机值的函数
+// biome-ignore lint/suspicious/noExplicitAny: polymorphic return based on option string
 function getRandom(option: string, config: SakuraConfig): any {
+	// biome-ignore lint/suspicious/noExplicitAny: polymorphic return
 	let ret: any;
 	let random: number;
 
@@ -144,21 +157,29 @@ function getRandom(option: string, config: SakuraConfig): any {
 		case "r":
 			ret = Math.random() * 6;
 			break;
+		case "a":
+			ret =
+				config.opacity.min +
+				Math.random() * (config.opacity.max - config.opacity.min);
+			break;
 		case "fnx":
 			random =
 				config.speed.horizontal.min +
 				Math.random() *
 					(config.speed.horizontal.max - config.speed.horizontal.min);
-			ret = (x: number, y: number) => x + random;
+			ret = (x: number, _y: number) => x + random;
 			break;
 		case "fny":
 			random =
 				config.speed.vertical.min +
 				Math.random() * (config.speed.vertical.max - config.speed.vertical.min);
-			ret = (x: number, y: number) => y + random;
+			ret = (_x: number, y: number) => y + random;
 			break;
 		case "fnr":
 			ret = (r: number) => r + config.speed.rotation;
+			break;
+		case "fna":
+			ret = (alpha: number) => alpha - config.speed.fadeSpeed * 0.01;
 			break;
 	}
 	return ret;
@@ -173,34 +194,43 @@ export class SakuraManager {
 	private animationId: number | null = null;
 	private img: HTMLImageElement | null = null;
 	private isRunning = false;
+	private isInitializing = false;
+	private resizeTimeout: number | null = null;
+	private boundResizeHandler: () => void;
 
 	constructor(config: SakuraConfig) {
 		this.config = config;
+		this.boundResizeHandler = this.handleResize.bind(this);
 	}
 
 	// 初始化樱花特效
 	async init(): Promise<void> {
-		if (!this.config.enable || this.isRunning) {
+		if (!this.config.enable || this.isRunning || this.isInitializing) {
 			return;
 		}
+		this.isInitializing = true;
 
 		// 创建图片对象
 		this.img = new Image();
-		this.img.src = "/sakura.png"; // 使用樱花图片
+		this.img.src = "/sakura.webp"; // 使用樱花图片
 
-		// 等待图片加载完成
-		await new Promise<void>((resolve, reject) => {
-			if (this.img) {
-				this.img.onload = () => resolve();
-				this.img.onerror = () =>
-					reject(new Error("Failed to load sakura image"));
-			}
-		});
+		try {
+			// 等待图片加载完成
+			await new Promise<void>((resolve, reject) => {
+				if (this.img) {
+					this.img.onload = () => resolve();
+					this.img.onerror = () =>
+						reject(new Error("Failed to load sakura image"));
+				}
+			});
 
-		this.createCanvas();
-		this.createSakuraList();
-		this.startAnimation();
-		this.isRunning = true;
+			this.createCanvas();
+			this.createSakuraList();
+			this.startAnimation();
+			this.isRunning = true;
+		} finally {
+			this.isInitializing = false;
+		}
 	}
 
 	// 创建画布
@@ -210,19 +240,23 @@ export class SakuraManager {
 		this.canvas.width = window.innerWidth;
 		this.canvas.setAttribute(
 			"style",
-			`position: fixed; left: 0; top: 0; pointer-events: none; z-index: ${this.config.zIndex};`,
+			`position: fixed; left: 0; top: 0; pointer-events: none; z-index: ${this.config.zIndex}; transform: translateZ(0); will-change: transform;`,
 		);
 		this.canvas.setAttribute("id", "canvas_sakura");
 		document.body.appendChild(this.canvas);
 		this.ctx = this.canvas.getContext("2d");
 
-		// 监听窗口大小变化
-		window.addEventListener("resize", this.handleResize.bind(this));
+		// 使用被动事件监听器提升滚动性能
+		window.addEventListener("resize", this.boundResizeHandler, {
+			passive: true,
+		});
 	}
 
 	// 创建樱花列表
 	private createSakuraList(): void {
-		if (!this.img || !this.ctx) return;
+		if (!this.img || !this.ctx) {
+			return;
+		}
 
 		this.sakuraList = new SakuraList();
 		const limitArray = new Array(this.config.sakuraNum).fill(
@@ -232,21 +266,25 @@ export class SakuraManager {
 		for (let i = 0; i < this.config.sakuraNum; i++) {
 			const randomX = getRandom("x", this.config);
 			const randomY = getRandom("y", this.config);
-			const randomR = getRandom("r", this.config);
 			const randomS = getRandom("s", this.config);
+			const randomR = getRandom("r", this.config);
+			const randomA = getRandom("a", this.config);
 			const randomFnx = getRandom("fnx", this.config);
 			const randomFny = getRandom("fny", this.config);
 			const randomFnR = getRandom("fnr", this.config);
+			const randomFnA = getRandom("fna", this.config);
 
 			const sakura = new Sakura(
 				randomX,
 				randomY,
 				randomS,
 				randomR,
+				randomA,
 				{
 					x: randomFnx,
 					y: randomFny,
 					r: randomFnR,
+					a: randomFnA,
 				},
 				i,
 				this.img,
@@ -261,10 +299,14 @@ export class SakuraManager {
 
 	// 开始动画
 	private startAnimation(): void {
-		if (!this.ctx || !this.canvas || !this.sakuraList) return;
+		if (!this.ctx || !this.canvas || !this.sakuraList) {
+			return;
+		}
 
 		const animate = () => {
-			if (!this.ctx || !this.canvas || !this.sakuraList) return;
+			if (!this.ctx || !this.canvas || !this.sakuraList) {
+				return;
+			}
 
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.sakuraList.update();
@@ -275,12 +317,17 @@ export class SakuraManager {
 		this.animationId = requestAnimationFrame(animate);
 	}
 
-	// 处理窗口大小变化
+	// 处理窗口大小变化 - 带防抖
 	private handleResize(): void {
-		if (this.canvas) {
-			this.canvas.width = window.innerWidth;
-			this.canvas.height = window.innerHeight;
+		if (this.resizeTimeout) {
+			cancelAnimationFrame(this.resizeTimeout);
 		}
+		this.resizeTimeout = requestAnimationFrame(() => {
+			if (this.canvas) {
+				this.canvas.width = window.innerWidth;
+				this.canvas.height = window.innerHeight;
+			}
+		});
 	}
 
 	// 停止樱花特效
@@ -290,12 +337,17 @@ export class SakuraManager {
 			this.animationId = null;
 		}
 
+		if (this.resizeTimeout) {
+			cancelAnimationFrame(this.resizeTimeout);
+			this.resizeTimeout = null;
+		}
+
 		if (this.canvas) {
 			document.body.removeChild(this.canvas);
 			this.canvas = null;
 		}
 
-		window.removeEventListener("resize", this.handleResize.bind(this));
+		window.removeEventListener("resize", this.boundResizeHandler);
 		this.isRunning = false;
 	}
 

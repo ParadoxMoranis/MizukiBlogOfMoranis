@@ -1052,11 +1052,15 @@ select:focus {
 
 .neo-navbar-actions #search-bar {
   display: flex !important;
-  width: 190px;
+  width: 44px !important;
   height: 40px;
   margin-right: 4px;
   border: 2px solid var(--neo-border);
   background: var(--neo-surface) !important;
+}
+
+#navbar.is-searching .neo-navbar-actions #search-bar {
+  width: 190px !important;
 }
 
 .neo-navbar-actions #search-bar input {

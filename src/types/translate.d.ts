@@ -9,6 +9,7 @@ declare global {
 				setLocal: (language: string) => void;
 				getCurrent: () => string;
 				getLocal: () => string;
+				translateLocal?: boolean;
 			};
 			setAutoDiscriminateLocalLanguage: () => void;
 			ignore: {
@@ -23,6 +24,7 @@ declare global {
 				start: () => void;
 			};
 			execute: () => void;
+			reset?: () => void;
 			to: string;
 			storage: {
 				set: (key: string, value: string) => void;

@@ -58,9 +58,7 @@ async function changeLanguage(languageCode: string) {
 					window.translate.reset();
 				}
 				// 强制设置允许翻译本地语种
-				if (window.translate.language) {
-					window.translate.language.translateLocal = true;
-				}
+				window.translate.language.translateLocal = true;
 			}
 
 			// 设置目标语言并执行翻译
@@ -133,9 +131,9 @@ onDestroy(() => {
     <!-- 翻译按钮 -->
     <button 
         aria-label="Language Translation" 
-        class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" 
-        id="translate-switch"
-        on:click={togglePanel}
+		class="neo-nav-action btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" 
+		id="translate-switch"
+		onclick={togglePanel}
     >
         <Icon icon="material-symbols:translate" class="text-[1.25rem] transition text-black/75 dark:text-white/75 hover:text-[var(--primary)]" />
     </button>
@@ -153,7 +151,7 @@ onDestroy(() => {
             {#each languages as lang}
                 <button
                     class="flex items-center gap-3 p-2 rounded-lg hover:bg-[var(--btn-plain-bg-hover)] transition-colors text-left w-full {currentLanguage === lang.code ? 'bg-[var(--btn-plain-bg-hover)] border-1 border-[var(--primary)]' : ''}"
-                    on:click={() => changeLanguage(lang.code)}
+					onclick={() => changeLanguage(lang.code)}
                 >
                     <span class="text-lg transition text-black/75 dark:text-white/75">{lang.icon}</span>
                     <span class="text-sm transition text-black/75 dark:text-white/75 {currentLanguage === lang.code ? 'font-medium text-[var(--primary)]' : ''}">{lang.name}</span>
